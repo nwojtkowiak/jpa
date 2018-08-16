@@ -20,6 +20,15 @@ public class AddressTO {
         this.city = city;
     }
 
+    public AddressTO(Long id, String street, int building, int flat, String post_code, String city) {
+        this.id = id;
+        this.street = street;
+        this.building = building;
+        this.flat = flat;
+        this.post_code = post_code;
+        this.city = city;
+    }
+
     public String getStreet() {
         return street;
     }
@@ -99,10 +108,10 @@ public class AddressTO {
             return this;
         }
 
-        /*public AddressTOBuilder withId(long id) {
+        public AddressTOBuilder withId(long id) {
             this.id = id;
             return this;
-        }*/
+        }
 
         public AddressTO build() {
             checkBeforeBuild(street, building, flat, post_code, city);

@@ -2,7 +2,7 @@ package com.capgemini.domain;
 
 import com.capgemini.listeners.InsertListener;
 import com.capgemini.listeners.UpdateListener;
-import com.capgemini.types.OfficeEntity;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,10 +26,10 @@ public class LoanEntity extends  AbstractEntity  implements Serializable {
 //    private CarEntity car;
 
     @ManyToOne
-    private com.capgemini.types.OfficeEntity officeFrom;
+    private OfficeEntity officeFrom;
 
     @ManyToOne
-    private com.capgemini.types.OfficeEntity officeTo;
+    private OfficeEntity officeTo;
 
     @Column(nullable = false)
     //@Temporal(TemporalType.TIMESTAMP)
@@ -61,7 +61,7 @@ public class LoanEntity extends  AbstractEntity  implements Serializable {
         return id;
     }
 
-    public com.capgemini.types.OfficeEntity getOfficeFrom() {
+    public OfficeEntity getOfficeFrom() {
         return officeFrom;
     }
 

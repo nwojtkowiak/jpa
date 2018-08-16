@@ -25,6 +25,20 @@ public class EmployeeTO {
         this.position = position;
     }
 
+    public EmployeeTO(String firstName, String lastName,
+                      Date birthDay, AddressTO address,
+                      OfficeTO office, PositionTO position,
+                      Collection<CarTO> cars) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
+        this.address = address;
+        this.office = office;
+        this.position = position;
+        this.cars = cars;
+    }
+
     public Long getId() {
         return id;
     }
@@ -87,6 +101,7 @@ public class EmployeeTO {
 
     public static class EmployeeTOBuilder {
 
+        private Long id;
         private String firstName;
         private String lastName;
         private Date birthDay;
@@ -99,6 +114,10 @@ public class EmployeeTO {
             super();
         }
 
+        public EmployeeTOBuilder withId(Long id){
+            this.id = id;
+            return this;
+        }
         public EmployeeTOBuilder withFirstName(String firstName) {
             this.firstName = firstName;
             return this;
@@ -134,25 +153,21 @@ public class EmployeeTO {
             return this;
         }
 
-        /*public AddressTOBuilder withId(long id) {
-            this.id = id;
-            return this;
-        }*/
 
         public EmployeeTO build() {
             checkBeforeBuild(firstName, lastName, birthDay, address, office,position);
-            return new EmployeeTO(firstName, lastName, birthDay, address, office,position);
+            return new EmployeeTO(firstName, lastName, birthDay, address, office,position,cars);
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position) {
             if (firstName == null || lastName == null || birthDay == null || address == null || office == null || position == null) {
-                throw new RuntimeException("Incorrect address to be created");
+                throw new RuntimeException("Incorrect employee to be created");
             }
 
         }
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position, Collection<CarTO>cars) {
             if (firstName == null || lastName == null || birthDay == null || address == null || office == null || position == null || cars == null) {
-                throw new RuntimeException("Incorrect address to be created");
+                throw new RuntimeException("Incorrect employee to be created");
             }
 
         }

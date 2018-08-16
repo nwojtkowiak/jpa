@@ -11,13 +11,13 @@ public class CarTO {
 	private Year prodYear;
 	private Double capacity;
 	private Integer power;
-	private BigInteger course;
+	private Long course;
 	private ColorTO color;
 	private TypeTO type;
 	private Collection<EmployeeTO> keepers;
 	private Long id;
 
-	public CarTO(String mark, String model, Year prodYear, double capacity, int power, BigInteger course, ColorTO color, TypeTO type) {
+	public CarTO(String mark, String model, Year prodYear, double capacity, int power, long course, ColorTO color, TypeTO type) {
 		this.mark = mark;
 		this.model = model;
 		this.prodYear = prodYear;
@@ -26,6 +26,22 @@ public class CarTO {
 		this.course = course;
 		this.color = color;
 		this.type = type;
+	}
+
+	public CarTO(Long id,String mark, String model, Year prodYear,
+				 Double capacity, Integer power, Long course,
+				 ColorTO color, TypeTO type, Collection<EmployeeTO> keepers
+				 ) {
+		this.mark = mark;
+		this.model = model;
+		this.prodYear = prodYear;
+		this.capacity = capacity;
+		this.power = power;
+		this.course = course;
+		this.color = color;
+		this.type = type;
+		this.keepers = keepers;
+		this.id = id;
 	}
 
 	public Long getId() {
@@ -44,7 +60,7 @@ public class CarTO {
 		return power;
 	}
 
-	public BigInteger getCourse() {
+	public long getCourse() {
 		return course;
 	}
 
@@ -64,18 +80,55 @@ public class CarTO {
 		return model;
 	}
 
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public void setProdYear(Year prodYear) {
+		this.prodYear = prodYear;
+	}
+
+	public void setCapacity(Double capacity) {
+		this.capacity = capacity;
+	}
+
+	public void setPower(Integer power) {
+		this.power = power;
+	}
+
+	public void setCourse(Long course) {
+		this.course = course;
+	}
+
+	public void setColor(ColorTO color) {
+		this.color = color;
+	}
+
+	public void setType(TypeTO type) {
+		this.type = type;
+	}
+
+	public void setKeepers(Collection<EmployeeTO> keepers) {
+		this.keepers = keepers;
+	}
+
 	public Collection<EmployeeTO> getKeepers() {
 		return keepers;
 	}
 
 	public static class CarTOBuilder {
 
+		private Long id;
 		private String mark;
 		private String model;
 		private Year prodYear;
 		private Double capacity;
 		private Integer power;
-		private BigInteger course;
+		private Long course;
 		private ColorTO color;
 		private TypeTO type;
 		private Collection<EmployeeTO> keepers;
@@ -84,6 +137,10 @@ public class CarTO {
 			super();
 		}
 
+		public CarTOBuilder withId(Long id){
+			this.id = id;
+			return this;
+		}
 		public CarTOBuilder withMark(String mark) {
 			this.mark = mark;
 			return this;
@@ -109,7 +166,7 @@ public class CarTO {
 			return this;
 		}
 
-		public CarTOBuilder withCourse(BigInteger course) {
+		public CarTOBuilder withCourse(long course) {
 			this.course = course;
 			return this;
 		}
@@ -136,10 +193,12 @@ public class CarTO {
 
 		public CarTO build() {
 			checkBeforeBuild(mark, model, prodYear, capacity, power, course, color, type);
-			return new CarTO(mark, model, prodYear, capacity, power, course, color, type);
+			return new CarTO(id,mark, model, prodYear, capacity, power, course, color, type,keepers);
 		}
 
-		private void checkBeforeBuild(String mark, String model, Year prodYear, Double capacity, Integer power, BigInteger course, ColorTO color, TypeTO type) {
+		private void checkBeforeBuild(String mark, String model, Year prodYear,
+									  Double capacity, Integer power, Long course,
+									  ColorTO color, TypeTO type) {
 			if (mark == null || model == null || prodYear == null ||
 				capacity == null || power == null || course == null ||
 				color == null || type == null) {

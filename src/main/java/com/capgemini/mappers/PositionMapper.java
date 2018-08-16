@@ -2,13 +2,16 @@ package com.capgemini.mappers;
 
 import com.capgemini.domain.PositionEntity;
 import com.capgemini.types.PositionTO;
+import com.capgemini.types.PositionTO.PositionToBuilder;
 
 public class PositionMapper {
     public static PositionTO toTO(PositionEntity positionEntity) {
         if (positionEntity == null)
             return null;
 
-        return new PositionTO(positionEntity.getName());
+        return new PositionToBuilder()
+                .withId(positionEntity.getId())
+                .withName(positionEntity.getName()).build();
 
     }
 

@@ -14,6 +14,13 @@ public class OfficeTO {
         this.address = address;
     }
 
+    public OfficeTO(Long id, String name, String phoneNumber, AddressTO address) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,6 +51,7 @@ public class OfficeTO {
 
     public static class OfficeTOBuilder {
 
+        private Long id;
         private String name;
         private String phoneNumber;
         private AddressTO address;
@@ -52,6 +60,10 @@ public class OfficeTO {
             super();
         }
 
+        public OfficeTOBuilder withId(Long id){
+            this.id = id;
+            return this;
+        }
         public OfficeTOBuilder withName(String name) {
             this.name = name;
             return this;

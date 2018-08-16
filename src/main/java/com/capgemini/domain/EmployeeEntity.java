@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "EMPLOYER")
+@Table(name = "EMPLOYEE")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners({UpdateListener.class, InsertListener.class})
 public class EmployeeEntity extends  AbstractEntity  implements Serializable {
@@ -27,15 +27,15 @@ public class EmployeeEntity extends  AbstractEntity  implements Serializable {
 	private Date birthDay;
 
 	@ManyToOne
-	@JoinColumn(name = "address_id", nullable = false)
+	@JoinColumn(name = "address_id")
 	private AddressEntity address;
 
 	@ManyToOne
-	@JoinColumn(name = "office_id", nullable = false)
+	@JoinColumn(name = "office_id")
 	private OfficeEntity office;
 
 	@ManyToOne
-	@JoinColumn(name = "position_id", nullable = false)
+	@JoinColumn(name = "position_id")
 	private PositionEntity position;
 
 

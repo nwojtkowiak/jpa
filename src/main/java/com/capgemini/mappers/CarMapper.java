@@ -7,6 +7,8 @@ import com.capgemini.types.CarTO.CarTOBuilder;
 import com.capgemini.types.ColorTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.TypeTO;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ public class CarMapper {
 		TypeTO typeTO = TypeMapper.toTO(carEntity.getType());
 
         return new CarTOBuilder().withCapacity(carEntity.getCapacity())
+				.withId(carEntity.getId())
 				.withColor(colorTO)
 				.withCourse(carEntity.getCourse())
 				.withMark(carEntity.getMark())
@@ -39,18 +42,19 @@ public class CarMapper {
             return null;
         }
 
-		return new CarEntity(carTO.getMark(),carTO.getModel(), carTO.getProdYear(),
+		return new CarEntity(null,carTO.getMark(),carTO.getModel(), carTO.getProdYear(),
                 carTO.getCapacity(), carTO.getPower(), carTO.getCourse(),
                 ColorMapper.toEntity(carTO.getColor()),
                 TypeMapper.toEntity(carTO.getType()));
 	}
 
 	public static List<CarTO> map2TOs(Collection<CarEntity> carEntities) {
-		return carEntities.stream().map(CarMapper::toTO).collect(Collectors.toList());
+		if(carEntities != null) {
+			return carEntities.stream().map(CarMapper::toTO).collect(Collectors.toList());
+		}
+		return new ArrayList<>();
 	}
 
-	public static List<CarEntity> map2Entities(Collection<CarTO> bookTOs) {
-		return bookTOs.stream().map(CarMapper::toEntity).collect(Collectors.toList());
-	}
+
 
 }

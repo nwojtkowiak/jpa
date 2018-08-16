@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "TYPE")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EntityListeners({UpdateListener.class, InsertListener.class})
-public class TypeEntity extends  AbstractEntity  implements Serializable {
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@EntityListeners({UpdateListener.class, InsertListener.class})
+public class TypeEntity /*extends  AbstractEntity */ implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

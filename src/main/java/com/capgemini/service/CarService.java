@@ -1,7 +1,9 @@
-package com.capgemini.service.impl;
+package com.capgemini.service;
 
+import com.capgemini.domain.ColorEntity;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.types.CarTO;
+import com.capgemini.types.ColorTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.TypeTO;
 
@@ -28,7 +30,17 @@ public interface CarService {
 
 	CarTO addCar(CarTO car);
 
+	ColorTO addColor(ColorTO colorTO);
+
 	CarTO updateCar(CarTO car);
 
 	void deleteCar(long car_id);
+
+	List<ColorTO> findAllColors();
+
+	void deleteColor(long color_id);
+
+	TypeTO addType(TypeTO type);
+
+	void deleteType(long type_id);
 }

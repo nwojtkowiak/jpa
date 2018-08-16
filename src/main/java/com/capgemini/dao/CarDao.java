@@ -16,21 +16,7 @@ vi.	wyszukaj po opiekunie
 */
 public interface CarDao extends Dao<CarEntity, Long> {
 
-    CarEntity findCarById(long id);
-
-    List<CarEntity> findCarsByMark(String mark);
-
-    List<CarEntity> findCarsByModel(String model);
-
-	List<CarEntity> findCarsByProdYear(Year prodYear);
-
-    List<CarEntity> findCarsByCourse(double course);
-
-    List<CarEntity> findCarsByCapacity(double capacity);
-
-    List<CarEntity> findCarsByPower(int power);
-
-    List<CarEntity> findCarsByTypeAndMark(String type, String mark);
+     List<CarEntity> findCarsByTypeAndMark(String type, String mark);
 
     List<CarEntity> findCarsByKeeper(long employee_id);
 

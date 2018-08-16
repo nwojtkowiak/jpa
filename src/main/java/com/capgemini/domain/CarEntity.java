@@ -11,9 +11,9 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "CAR")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EntityListeners({UpdateListener.class, InsertListener.class})
-public class CarEntity extends  AbstractEntity  implements Serializable {
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@EntityListeners({UpdateListener.class, InsertListener.class})
+public class CarEntity /*extends  AbstractEntity */ implements Serializable {
 
 
     @Id
@@ -30,28 +30,17 @@ public class CarEntity extends  AbstractEntity  implements Serializable {
     @Column(nullable = false)
     private int power;
     @Column(nullable = false)
-    private BigInteger course;
+    private Long course;
 
-    public CarEntity(String mark, String model, Year prodYear, double capacity, int power, BigInteger course, ColorEntity color, TypeEntity type) {
-        this.mark = mark;
-        this.model = model;
-        this.prodYear = prodYear;
-        this.capacity = capacity;
-        this.power = power;
-        this.course = course;
-        this.color = color;
-        this.type = type;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "color_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "color_id")
     private ColorEntity color;
 
-    @OneToOne
-    @JoinColumn(name = "type_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
     private TypeEntity type;
 
-    @ManyToMany(mappedBy = "cars")
+    @ManyToMany(mappedBy = "cars",fetch = FetchType.LAZY)
     private Collection<EmployeeEntity> keepers;
 
     //czy trzeba robic bidirectional, czy moze byc bez tego i unidirectional
@@ -60,6 +49,18 @@ public class CarEntity extends  AbstractEntity  implements Serializable {
 
     // for hibernate
     public CarEntity() {
+    }
+
+    public CarEntity(Long id,String mark, String model, Year prodYear, double capacity, int power, long course, ColorEntity color, TypeEntity type) {
+        this.mark = mark;
+        this.model = model;
+        this.prodYear = prodYear;
+        this.capacity = capacity;
+        this.power = power;
+        this.course = course;
+        this.color = color;
+        this.type = type;
+        this.id = id;
     }
 
     public Long getId() {
@@ -86,7 +87,7 @@ public class CarEntity extends  AbstractEntity  implements Serializable {
         return power;
     }
 
-    public BigInteger getCourse() {
+    public long getCourse() {
         return course;
     }
 

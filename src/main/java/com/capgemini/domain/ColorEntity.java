@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "COLOR")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EntityListeners({UpdateListener.class, InsertListener.class})
-public class ColorEntity extends  AbstractEntity  implements Serializable {
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@EntityListeners({UpdateListener.class, InsertListener.class})
+public class ColorEntity /*extends  AbstractEntity  */ implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,11 @@ public class ColorEntity extends  AbstractEntity  implements Serializable {
     @Column(nullable = false, length = 30)
     private String name;
 
-    public ColorEntity(String name){
+    public ColorEntity(){
+
+    }
+    public ColorEntity(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
