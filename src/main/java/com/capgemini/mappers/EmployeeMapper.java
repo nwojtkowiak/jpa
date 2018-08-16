@@ -1,18 +1,36 @@
 package com.capgemini.mappers;
 
+import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.EmployeeEntity;
-import com.capgemini.types.EmployeeTO;
+import com.capgemini.types.*;
+import com.capgemini.types.EmployeeTO.EmployeeTOBuilder;
 
-//TODO dodać cars
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
 public class EmployeeMapper {
     public static EmployeeTO toTO(EmployeeEntity employeeEntity) {
         if (employeeEntity == null) {
             return null;
         }
+        Collection<CarTO> cars = CarMapper.map2TOs(employeeEntity.getCars());
+        AddressTO addressTO = AddressMapper.toTO(employeeEntity.getAddress());
+        OfficeTO officeTO = OfficeMapper.toTO(employeeEntity.getOffice());
+        PositionTO positionTO = PositionMapper.toTO(employeeEntity.getPosition());
 
-        return new EmployeeTO(employeeEntity.getFirstName(),employeeEntity.getLastName(),
+        return new EmployeeTOBuilder().withFirstName(employeeEntity.getFirstName())
+                .withLastName(employeeEntity.getLastName())
+                .withBirthDay(employeeEntity.getBirthDay())
+                .withAddress(addressTO)
+                .withOffice(officeTO)
+                .withPosition(positionTO)
+                .withCars(cars).build();
+
+        /*EmployeeTO(employeeEntity.getFirstName(),employeeEntity.getLastName(),
                 employeeEntity.getBirthDay(),AddressMapper.toTO(employeeEntity.getAddress()),
-                OfficeMapper.toTO(employeeEntity.getOffice()),PositionMapper.toTO(employeeEntity.getPosition()));
+                OfficeMapper.toTO(employeeEntity.getOffice()),PositionMapper.toTO(employeeEntity.getPosition()));*/
 
     }
 
@@ -25,5 +43,9 @@ public class EmployeeMapper {
                 employeeTO.getBirthDay(),AddressMapper.toEntity(employeeTO.getAddress()),
                 OfficeMapper.toEntity(employeeTO.getOffice()),PositionMapper.toEntity(employeeTO.getPosition()));
 
+    }
+
+    public static List<EmployeeTO> map2TOs(Collection<EmployeeEntity> employeeEntities) {
+        return employeeEntities.stream().map(EmployeeMapper::toTO).collect(Collectors.toList());
     }
 }

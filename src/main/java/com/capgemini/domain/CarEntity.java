@@ -98,39 +98,7 @@ public class CarEntity extends  AbstractEntity  implements Serializable {
         return type;
     }
 
-    public void setMark(String mark) {
-        this.mark = mark;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setProdYear(Year prodYear) {
-        this.prodYear = prodYear;
-    }
-
-    public void setCapacity(double capacity) {
-        this.capacity = capacity;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
-    }
-
-    public void setCourse(BigInteger course) {
-        this.course = course;
-    }
-
-    public void setColor(ColorEntity color) {
-        this.color = color;
-    }
-
-    public void setType(TypeEntity type) {
-        this.type = type;
-    }
-
-    public void setKeepers(Collection<EmployeeEntity> keepers) {
-        this.keepers = keepers;
+    public Collection<EmployeeEntity> getKeepers() {
+        return keepers;
     }
 }

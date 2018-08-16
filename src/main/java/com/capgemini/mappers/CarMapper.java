@@ -3,11 +3,15 @@ package com.capgemini.mappers;
 
 import com.capgemini.domain.CarEntity;
 import com.capgemini.types.CarTO;
-
+import com.capgemini.types.CarTO.CarTOBuilder;
+import com.capgemini.types.ColorTO;
+import com.capgemini.types.EmployeeTO;
+import com.capgemini.types.TypeTO;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO dodać keepers
+
 public class CarMapper {
 
 	public static CarTO toTO(CarEntity carEntity) {
@@ -15,10 +19,19 @@ public class CarMapper {
             return null;
         }
 
-        return new CarTO(carEntity.getMark(),carEntity.getModel(), carEntity.getProdYear(),
-                carEntity.getCapacity(), carEntity.getPower(), carEntity.getCourse(),
-                ColorMapper.toTO(carEntity.getColor()),
-                TypeMapper.toTO(carEntity.getType()));
+		Collection<EmployeeTO> keepers = EmployeeMapper.map2TOs(carEntity.getKeepers());
+		ColorTO colorTO = ColorMapper.toTO(carEntity.getColor());
+		TypeTO typeTO = TypeMapper.toTO(carEntity.getType());
+
+        return new CarTOBuilder().withCapacity(carEntity.getCapacity())
+				.withColor(colorTO)
+				.withCourse(carEntity.getCourse())
+				.withMark(carEntity.getMark())
+				.withModel(carEntity.getModel())
+				.withPower(carEntity.getPower())
+				.withProdYear(carEntity.getProdYear())
+				.withType(typeTO)
+				.withKeepers(keepers).build();
 	}
 
 	public static CarEntity toEntity(CarTO carTO) {
@@ -32,11 +45,11 @@ public class CarMapper {
                 TypeMapper.toEntity(carTO.getType()));
 	}
 
-	public static List<CarTO> map2TOs(List<CarEntity> carEntities) {
+	public static List<CarTO> map2TOs(Collection<CarEntity> carEntities) {
 		return carEntities.stream().map(CarMapper::toTO).collect(Collectors.toList());
 	}
 
-	public static List<CarEntity> map2Entities(List<CarTO> bookTOs) {
+	public static List<CarEntity> map2Entities(Collection<CarTO> bookTOs) {
 		return bookTOs.stream().map(CarMapper::toEntity).collect(Collectors.toList());
 	}
 

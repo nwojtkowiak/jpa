@@ -1,7 +1,10 @@
 package com.capgemini.mappers;
 
+import com.capgemini.domain.AddressEntity;
 import com.capgemini.domain.OfficeEntity;
+import com.capgemini.types.AddressTO;
 import com.capgemini.types.OfficeTO;
+import com.capgemini.types.OfficeTO.OfficeTOBuilder;
 
 public class OfficeMapper {
 //TODO przy tworzeniu TO musi być builder, ale przy tworzeniu encji musi być konstruktor
@@ -12,7 +15,11 @@ public class OfficeMapper {
         if (officeEntity == null)
             return null;
 
-        return new OfficeTO(officeEntity.getName(), officeEntity.getPhoneNumber(), officeEntity.getAddress());
+        AddressTO addressTO = AddressMapper.toTO(officeEntity.getAddress());
+
+        return new OfficeTOBuilder().withAddress(addressTO)
+                .withName(officeEntity.getName())
+                .withPhoneNumber(officeEntity.getPhoneNumber()).build();
 
     }
 
@@ -20,7 +27,8 @@ public class OfficeMapper {
         if (officeTO == null)
             return null;
 
-        return new OfficeEntity(officeTO.getName(), officeTO.getPhoneNumber(), officeTO.getAddress());
+        AddressEntity addressEntity = AddressMapper.toEntity(officeTO.getAddress());
+        return new OfficeEntity(officeTO.getName(), officeTO.getPhoneNumber(), addressEntity);
 
     }
 

@@ -95,4 +95,8 @@ public class EmployeeEntity extends  AbstractEntity  implements Serializable {
 	public PositionEntity getPosition() {
 		return position;
 	}
+
+	public Collection<CarEntity> getCars() {
+		return cars;
+	}
 }

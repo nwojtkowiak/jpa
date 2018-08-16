@@ -78,6 +78,7 @@ public class CarTO {
 		private BigInteger course;
 		private ColorTO color;
 		private TypeTO type;
+		private Collection<EmployeeTO> keepers;
 
 		public CarTOBuilder() {
 			super();
@@ -113,13 +114,18 @@ public class CarTO {
 			return this;
 		}
 
-		public CarTOBuilder withCars(ColorTO color) {
+		public CarTOBuilder withColor(ColorTO color) {
 			this.color = color;
 			return this;
 		}
 
-		public CarTOBuilder withCars(TypeTO type) {
+		public CarTOBuilder withType(TypeTO type) {
 			this.type = type;
+			return this;
+		}
+
+		public CarTOBuilder withKeepers(Collection<EmployeeTO> keepers) {
+			this.keepers = keepers;
 			return this;
 		}
 

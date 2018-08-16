@@ -2,6 +2,7 @@ package com.capgemini.mappers;
 
 import com.capgemini.domain.AddressEntity;
 import com.capgemini.types.AddressTO;
+import com.capgemini.types.AddressTO.AddressTOBuilder;
 
 public class AddressMapper {
     public static AddressTO toTO(AddressEntity addressEntity) {
@@ -9,8 +10,12 @@ public class AddressMapper {
             return null;
         }
 
-        return new AddressTO(addressEntity.getStreet(),addressEntity.getBuilding(),
-                addressEntity.getFlat(),addressEntity.getPost_code(),addressEntity.getCity());
+        return new AddressTOBuilder().withBuilding(addressEntity.getBuilding())
+                .withStreet(addressEntity.getStreet())
+                .withCity(addressEntity.getCity())
+                .withPostCode(addressEntity.getPost_code())
+                .withFlat(addressEntity.getFlat()).build();
+
     }
 
     public static AddressEntity toEntity(AddressTO addressTO) {
