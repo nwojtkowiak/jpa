@@ -4,6 +4,7 @@ import com.capgemini.dao.ColorDao;
 import com.capgemini.domain.ColorEntity;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 
@@ -13,12 +14,13 @@ public class ColorDaoImpl extends AbstractDao<ColorEntity, Long> implements Colo
 
     @Override
     public ColorEntity add(ColorEntity entity) {
-        TypedQuery<ColorEntity> query = entityManager.createQuery("select e from ColorEntity e where e.name = :name",ColorEntity.class);
+        TypedQuery<ColorEntity> query = entityManager.createQuery("select e from ColorEntity e where e.name = :name", ColorEntity.class);
         query.setParameter("name", entity.getName());
 
-        if(query.getSingleResult() != null){
+        try {
             return query.getSingleResult();
+        } catch (NoResultException e) {
+            return save(entity);
         }
-        return save(entity);
     }
 }

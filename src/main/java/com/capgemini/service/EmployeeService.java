@@ -1,6 +1,6 @@
 package com.capgemini.service;
 
-import com.capgemini.types.*;
+import com.capgemini.types.EmployeeTO;
 
 import java.util.List;
 
@@ -14,15 +14,15 @@ vi.	wyszukaj po opiekunie
 */
 public interface EmployeeService {
 
-	List<EmployeeTO> findAllEmployees();
+    List<EmployeeTO> findAllEmployees();
 
-	EmployeeTO findEmployeeById(long id);
+    EmployeeTO findEmployeeById(long id);
 
-	EmployeeTO addEmployee(EmployeeTO employee);
+    EmployeeTO addEmployee(EmployeeTO employee);
 
-	void deleteEmployee(long employee_id);
+    void deleteEmployee(long employee_id);
 
-	//AddressTO addAddress(AddressTO address);
+    EmployeeTO addOfficeToEmployee(long employee_id, long office_id);
 
 
 }

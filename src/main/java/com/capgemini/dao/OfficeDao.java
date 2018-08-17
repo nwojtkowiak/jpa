@@ -7,8 +7,7 @@ public interface OfficeDao extends Dao<OfficeEntity, Long> {
 
     OfficeEntity add(OfficeEntity entity);
 
-	void deleteOffice(long id);
-
+    void deleteOffice(long id);
 
 
 }

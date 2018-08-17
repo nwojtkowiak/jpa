@@ -1,8 +1,6 @@
 package com.capgemini.dao.impl;
 
-import com.capgemini.dao.AddressDao;
 import com.capgemini.dao.OfficeDao;
-import com.capgemini.domain.AddressEntity;
 import com.capgemini.domain.OfficeEntity;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +14,12 @@ public class OfficeDaoImpl extends AbstractDao<OfficeEntity, Long> implements Of
 
     @Override
     public OfficeEntity add(OfficeEntity entity) {
-        TypedQuery<OfficeEntity> query = entityManager.createQuery("select e from OfficeEntity e where e.name = :name",OfficeEntity.class);
+        TypedQuery<OfficeEntity> query = entityManager.createQuery("select e from OfficeEntity e where e.name = :name", OfficeEntity.class);
         query.setParameter("name", entity.getName());
 
-        try{
+        try {
             return query.getSingleResult();
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             return save(entity);
         }
     }

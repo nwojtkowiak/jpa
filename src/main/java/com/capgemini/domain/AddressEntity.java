@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Table(name = "ADDRESS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners({UpdateListener.class, InsertListener.class})
-public class AddressEntity extends  AbstractEntity implements Serializable {
+public class AddressEntity extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,12 +26,17 @@ public class AddressEntity extends  AbstractEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String city;
 
-    public AddressEntity(String street, int building, int flat, String post_code, String city) {
+    public AddressEntity() {
+
+    }
+
+    public AddressEntity(Long id, String street, int building, int flat, String post_code, String city) {
         this.street = street;
         this.building = building;
         this.flat = flat;
         this.post_code = post_code;
         this.city = city;
+        this.id = id;
     }
 
     public Long getId() {

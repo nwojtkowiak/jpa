@@ -1,13 +1,8 @@
 package com.capgemini.domain;
 
-import com.capgemini.listeners.InsertListener;
-import com.capgemini.listeners.UpdateListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.Year;
-import java.util.Collection;
 
 @Entity
 @Table(name = "CAR")
@@ -32,7 +27,7 @@ public class CarEntity /*extends  AbstractEntity */ implements Serializable {
     @Column(nullable = false)
     private Long course;
 
-    @ManyToOne(cascade = CascadeType.ALL )
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "color_id")
     private ColorEntity color;
 
@@ -51,7 +46,7 @@ public class CarEntity /*extends  AbstractEntity */ implements Serializable {
     public CarEntity() {
     }
 
-    public CarEntity(Long id,String mark, String model, Year prodYear, double capacity, int power, long course, ColorEntity color, TypeEntity type) {
+    public CarEntity(Long id, String mark, String model, Year prodYear, double capacity, int power, long course, ColorEntity color, TypeEntity type) {
         this.mark = mark;
         this.model = model;
         this.prodYear = prodYear;
@@ -99,7 +94,39 @@ public class CarEntity /*extends  AbstractEntity */ implements Serializable {
         return type;
     }
 
-//    public Collection<EmployeeEntity> getKeepers() {
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setProdYear(Year prodYear) {
+        this.prodYear = prodYear;
+    }
+
+    public void setCapacity(double capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public void setCourse(Long course) {
+        this.course = course;
+    }
+
+    public void setColor(ColorEntity color) {
+        this.color = color;
+    }
+
+    public void setType(TypeEntity type) {
+        this.type = type;
+    }
+
+    //    public Collection<EmployeeEntity> getKeepers() {
 //        return keepers;
 //    }
 }

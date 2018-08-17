@@ -19,7 +19,7 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
     public List<CarEntity> findCarsByTypeAndMark(String type, String mark) {
 
         TypedQuery<CarEntity> query = entityManager.createQuery(
-               "select car from CarEntity car inner join car.type t "+"where t.name = :type and car.mark = :mark",CarEntity.class);
+                "select car from CarEntity car inner join car.type t " + "where t.name = :type and car.mark = :mark", CarEntity.class);
 
         query.setParameter("type", type);
         query.setParameter("mark", mark);
@@ -33,9 +33,9 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         query.setParameter("employee_id", employee_id);
 
 
-        try{
+        try {
             return query.getResultList();
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             return new ArrayList<>();
         }
     }
@@ -58,16 +58,16 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
     //TODO
     @Override
     public void addKeeper(CarEntity carEntity, EmployeeEntity employeeEntity) {
-        TypedQuery<EmployeeEntity> query = entityManager.createQuery (
+        TypedQuery<EmployeeEntity> query = entityManager.createQuery(
                 "select e from EmployeeEntity e where e.id = :id", EmployeeEntity.class);
         query.setParameter("id", employeeEntity.getId());
 
-        try{
+        try {
             EmployeeEntity foundEmployee = query.getSingleResult();
             foundEmployee.getCars().add(carEntity);
             entityManager.merge(foundEmployee);
 
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
 
         }
 

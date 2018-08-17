@@ -1,11 +1,19 @@
 package com.capgemini.service.impl;
 
-import com.capgemini.dao.*;
-import com.capgemini.domain.*;
-import com.capgemini.mappers.*;
-import com.capgemini.service.CarService;
+import com.capgemini.dao.AddressDao;
+import com.capgemini.dao.EmployeeDao;
+import com.capgemini.dao.OfficeDao;
+import com.capgemini.dao.PositionDao;
+import com.capgemini.domain.AddressEntity;
+import com.capgemini.domain.EmployeeEntity;
+import com.capgemini.domain.OfficeEntity;
+import com.capgemini.domain.PositionEntity;
+import com.capgemini.mappers.AddressMapper;
+import com.capgemini.mappers.EmployeeMapper;
+import com.capgemini.mappers.OfficeMapper;
+import com.capgemini.mappers.PositionMapper;
 import com.capgemini.service.EmployeeService;
-import com.capgemini.types.*;
+import com.capgemini.types.EmployeeTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeTO findEmployeeById(long id) {
+
         return EmployeeMapper.toTO(employeeDao.findOne(id));
     }
 
@@ -62,6 +71,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployee(long employee_id) {
         employeeDao.deleteEmployee(employee_id);
+    }
+
+    @Override
+    public EmployeeTO addOfficeToEmployee(long employee_id, long office_id) {
+        EmployeeEntity employeeEntity = employeeDao.setOffice(employee_id, office_id);
+        return EmployeeMapper.toTO(employeeEntity);
     }
 
 

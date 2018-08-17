@@ -4,7 +4,7 @@ public class ColorTO {
     private Long id;
     private String name;
 
-    public ColorTO(Long id, String name){
+    public ColorTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -43,11 +43,11 @@ public class ColorTO {
 
         public ColorTO build() {
             checkBeforeBuild(name);
-            return new ColorTO(id,name);
+            return new ColorTO(id, name);
         }
 
         private void checkBeforeBuild(String name) {
-            if (name == null ) {
+            if (name == null) {
                 throw new RuntimeException("Incorrect color be created");
             }
         }

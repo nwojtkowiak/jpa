@@ -1,8 +1,5 @@
 package com.capgemini.domain;
 
-import com.capgemini.listeners.InsertListener;
-import com.capgemini.listeners.UpdateListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,9 +15,10 @@ public class ColorEntity /*extends  AbstractEntity  */ implements Serializable {
     @Column(nullable = false, length = 30)
     private String name;
 
-    public ColorEntity(){
+    public ColorEntity() {
 
     }
+
     public ColorEntity(Long id, String name) {
         this.id = id;
         this.name = name;

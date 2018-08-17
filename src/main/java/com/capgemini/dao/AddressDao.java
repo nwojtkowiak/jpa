@@ -7,8 +7,7 @@ public interface AddressDao extends Dao<AddressEntity, Long> {
 
     AddressEntity add(AddressEntity entity);
 
-	void deleteAddress(long id);
-
+    void deleteAddress(long id);
 
 
 }

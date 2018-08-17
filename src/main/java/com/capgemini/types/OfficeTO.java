@@ -1,7 +1,5 @@
 package com.capgemini.types;
 
-import com.capgemini.domain.AddressEntity;
-
 public class OfficeTO {
     private Long id;
     private String name;
@@ -60,10 +58,11 @@ public class OfficeTO {
             super();
         }
 
-        public OfficeTOBuilder withId(Long id){
+        public OfficeTOBuilder withId(Long id) {
             this.id = id;
             return this;
         }
+
         public OfficeTOBuilder withName(String name) {
             this.name = name;
             return this;
@@ -88,7 +87,7 @@ public class OfficeTO {
 
         public OfficeTO build() {
             checkBeforeBuild(name, phoneNumber, address);
-            return new OfficeTO(id,name, phoneNumber, address);
+            return new OfficeTO(id, name, phoneNumber, address);
         }
 
         private void checkBeforeBuild(String name, String phoneNumber, AddressTO address) {

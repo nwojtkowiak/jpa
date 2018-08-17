@@ -15,7 +15,7 @@ public class TypeEntity /*extends  AbstractEntity */ implements Serializable {
     @Column(nullable = false, length = 30)
     private String name;
 
-    public TypeEntity(String name){
+    public TypeEntity(String name) {
         this.name = name;
     }
 

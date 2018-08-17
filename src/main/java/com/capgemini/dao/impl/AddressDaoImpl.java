@@ -1,9 +1,7 @@
 package com.capgemini.dao.impl;
 
 import com.capgemini.dao.AddressDao;
-import com.capgemini.dao.EmployeeDao;
 import com.capgemini.domain.AddressEntity;
-import com.capgemini.domain.EmployeeEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -19,7 +17,7 @@ public class AddressDaoImpl extends AbstractDao<AddressEntity, Long> implements 
         TypedQuery<AddressEntity> query = entityManager.createQuery(
                 "select e from AddressEntity e where e.street = :street " +
                         " and e.building=:building and e.flat=:flat " +
-                        " and e.post_code=:postCode and e.city=:city",AddressEntity.class);
+                        " and e.post_code=:postCode and e.city=:city", AddressEntity.class);
         query.setParameter("street", entity.getStreet());
         query.setParameter("building", entity.getBuilding());
         query.setParameter("flat", entity.getFlat());
@@ -27,9 +25,9 @@ public class AddressDaoImpl extends AbstractDao<AddressEntity, Long> implements 
         query.setParameter("city", entity.getCity());
 
 
-        try{
+        try {
             return query.getSingleResult();
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             return save(entity);
         }
 

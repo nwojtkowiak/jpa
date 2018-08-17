@@ -19,6 +19,6 @@ public class TypeMapper {
         if (typeTO == null)
             return null;
 
-        return new TypeEntity(typeTO.getId(),typeTO.getName());
+        return new TypeEntity(typeTO.getId(), typeTO.getName());
     }
 }

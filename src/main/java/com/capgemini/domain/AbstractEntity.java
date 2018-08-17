@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @MappedSuperclass
-public class AbstractEntity  {
+public class AbstractEntity {
     @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;

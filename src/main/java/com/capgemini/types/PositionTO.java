@@ -46,14 +46,13 @@ public class PositionTO {
         }
 
 
-
         public PositionTO build() {
             checkBeforeBuild(name);
-            return new PositionTO(id,name);
+            return new PositionTO(id, name);
         }
 
         private void checkBeforeBuild(String name) {
-            if (name == null ) {
+            if (name == null) {
                 throw new RuntimeException("Incorrect position be created");
             }
         }

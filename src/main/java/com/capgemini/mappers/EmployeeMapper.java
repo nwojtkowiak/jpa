@@ -1,6 +1,5 @@
 package com.capgemini.mappers;
 
-import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.types.*;
 import com.capgemini.types.EmployeeTO.EmployeeTOBuilder;
@@ -41,14 +40,14 @@ public class EmployeeMapper {
             return null;
         }
 
-        return new EmployeeEntity(employeeTO.getId(),employeeTO.getFirstName(),employeeTO.getLastName(),
-                employeeTO.getBirthDay(),AddressMapper.toEntity(employeeTO.getAddress()),
-                OfficeMapper.toEntity(employeeTO.getOffice()),PositionMapper.toEntity(employeeTO.getPosition()));
+        return new EmployeeEntity(employeeTO.getId(), employeeTO.getFirstName(), employeeTO.getLastName(),
+                employeeTO.getBirthDay(), AddressMapper.toEntity(employeeTO.getAddress()),
+                OfficeMapper.toEntity(employeeTO.getOffice()), PositionMapper.toEntity(employeeTO.getPosition()));
 
     }
 
     public static List<EmployeeTO> map2TOs(Collection<EmployeeEntity> employeeEntities) {
-        if(employeeEntities != null) {
+        if (employeeEntities != null) {
             return employeeEntities.stream().map(EmployeeMapper::toTO).collect(Collectors.toList());
         }
         return new ArrayList<>();

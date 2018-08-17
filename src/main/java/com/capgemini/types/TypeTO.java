@@ -25,7 +25,7 @@ public class TypeTO {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public static class TypeToBuilder {
 
         private Long id;
@@ -49,7 +49,7 @@ public class TypeTO {
 
         public TypeTO build() {
             checkBeforeBuild(name);
-            return new TypeTO(id,name);
+            return new TypeTO(id, name);
         }
 
         private void checkBeforeBuild(String name) {

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Table(name = "POSITION")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners({UpdateListener.class, InsertListener.class})
-public class PositionEntity extends  AbstractEntity  implements Serializable {
+public class PositionEntity extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

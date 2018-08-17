@@ -115,7 +115,7 @@ public class AddressTO {
 
         public AddressTO build() {
             checkBeforeBuild(street, building, flat, post_code, city);
-            return new AddressTO(id,street,building,flat,post_code,city);
+            return new AddressTO(id, street, building, flat, post_code, city);
         }
 
         private void checkBeforeBuild(String street, Integer building, Integer flat, String post_code, String city) {

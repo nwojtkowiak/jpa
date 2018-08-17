@@ -6,7 +6,6 @@ import com.capgemini.listeners.UpdateListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -14,114 +13,113 @@ import java.util.List;
 @Table(name = "EMPLOYEE")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners({UpdateListener.class, InsertListener.class})
-public class EmployeeEntity extends  AbstractEntity  implements Serializable {
+public class EmployeeEntity extends AbstractEntity implements Serializable {
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column(nullable = false, length = 45)
-	private String firstName;
-	@Column(nullable = false, length = 45)
-	private String lastName;
-	@Column(nullable = false)
-	//@Temporal(TemporalType.TIMESTAMP)
-	private Date birthDay;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(nullable = false, length = 45)
+    private String firstName;
+    @Column(nullable = false, length = 45)
+    private String lastName;
+    @Column(nullable = false)
+    //@Temporal(TemporalType.TIMESTAMP)
+    private Date birthDay;
 
-	@ManyToOne
-	@JoinColumn(name = "address_id")
-	private AddressEntity address;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private AddressEntity address;
 
-	@ManyToOne
-	@JoinColumn(name = "office_id")
-	private OfficeEntity office;
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private OfficeEntity office;
 
-	@ManyToOne
-	@JoinColumn(name = "position_id")
-	private PositionEntity position;
-
-
-	@ManyToMany //co ustawić w usuwaniu?
-	@JoinTable(name = "KEEPER", joinColumns = {@JoinColumn(name = "employee_id")},
-	inverseJoinColumns = {@JoinColumn(name = "car_id")})
-	private List<CarEntity> cars;
+    @ManyToOne
+    @JoinColumn(name = "position_id")
+    private PositionEntity position;
 
 
+    @ManyToMany //co ustawić w usuwaniu?
+    @JoinTable(name = "KEEPER", joinColumns = {@JoinColumn(name = "employee_id")},
+            inverseJoinColumns = {@JoinColumn(name = "car_id")})
+    private List<CarEntity> cars;
 
-	// for hibernate
-	public EmployeeEntity() {
-		this.cars = new ArrayList<>();
-	}
 
-	public EmployeeEntity(Long id,String firstName, String lastName, Date birthDay, AddressEntity address, OfficeEntity office,
-						  PositionEntity position) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.birthDay = birthDay;
-		this.address = address;
-		this.office = office;
-		this.position = position;
-		this.cars = new ArrayList<>();
-	}
+    // for hibernate
+    public EmployeeEntity() {
+        this.cars = new ArrayList<>();
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public EmployeeEntity(Long id, String firstName, String lastName, Date birthDay, AddressEntity address, OfficeEntity office,
+                          PositionEntity position) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
+        this.address = address;
+        this.office = office;
+        this.position = position;
+        this.cars = new ArrayList<>();
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public AddressEntity getAddress() {
-		return address;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public Date getBirthDay() {
-		return birthDay;
-	}
+    public AddressEntity getAddress() {
+        return address;
+    }
 
-	public OfficeEntity getOffice() {
-		return office;
-	}
+    public Date getBirthDay() {
+        return birthDay;
+    }
 
-	public PositionEntity getPosition() {
-		return position;
-	}
+    public OfficeEntity getOffice() {
+        return office;
+    }
 
-	public List<CarEntity> getCars() {
-		return cars;
-	}
+    public PositionEntity getPosition() {
+        return position;
+    }
 
-	public void setBirthDay(Date birthDay) {
-		this.birthDay = birthDay;
-	}
+    public List<CarEntity> getCars() {
+        return cars;
+    }
 
-	public void setAddress(AddressEntity address) {
-		this.address = address;
-	}
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
 
-	public void setOffice(OfficeEntity office) {
-		this.office = office;
-	}
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
 
-	public void setPosition(PositionEntity position) {
-		this.position = position;
-	}
+    public void setOffice(OfficeEntity office) {
+        this.office = office;
+    }
 
-	public void setCars(List<CarEntity> cars) {
-		this.cars = cars;
-	}
+    public void setPosition(PositionEntity position) {
+        this.position = position;
+    }
+
+    public void setCars(List<CarEntity> cars) {
+        this.cars = cars;
+    }
 }

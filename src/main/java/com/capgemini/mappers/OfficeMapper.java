@@ -15,7 +15,12 @@ public class OfficeMapper {
         if (officeEntity == null)
             return null;
 
-        AddressTO addressTO = AddressMapper.toTO(officeEntity.getAddress());
+        AddressTO addressTO;
+        if (officeEntity.getAddress() != null) {
+            addressTO = AddressMapper.toTO(officeEntity.getAddress());
+        } else {
+            addressTO = null;
+        }
 
         return new OfficeTOBuilder().withAddress(addressTO)
                 .withId(officeEntity.getId())

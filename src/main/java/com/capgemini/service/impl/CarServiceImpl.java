@@ -43,7 +43,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<CarTO> findCarsByKeeper(long employee_id) {
         List<CarEntity> lisOfCars = carDao.findCarsByKeeper(employee_id);
-        if(lisOfCars != null) {
+        if (lisOfCars != null) {
             return CarMapper.map2TOs(lisOfCars);
         }
         return new ArrayList<>();
@@ -60,14 +60,25 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void addKeeper( CarTO carTO,EmployeeTO employeeTO) {
-         carDao.addKeeper(CarMapper.toEntity(carTO), EmployeeMapper.toEntity(employeeTO));
+    @Transactional(readOnly = false)
+    public void addKeeper(CarTO carTO, EmployeeTO employeeTO) {
+        carDao.addKeeper(CarMapper.toEntity(carTO), EmployeeMapper.toEntity(employeeTO));
     }
 
     @Override
     @Transactional(readOnly = false)
     public CarTO addCar(CarTO car) {
-        CarTO carTO = CarMapper.toTO(carDao.add(CarMapper.toEntity(car)));
+        ColorEntity colorEntity = ColorMapper.toEntity(car.getColor());
+        colorEntity = colorDao.add(colorEntity);
+
+        TypeEntity typeEntity = TypeMapper.toEntity(car.getType());
+        typeEntity = typeDao.add(typeEntity);
+
+        CarEntity carEntity = CarMapper.toEntity(car);
+        carEntity.setColor(colorEntity);
+        carEntity.setType(typeEntity);
+
+        CarTO carTO = CarMapper.toTO(carDao.add(carEntity));
         return carTO;
     }
 
@@ -79,23 +90,35 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<ColorTO> findAllColors(){
+    public List<ColorTO> findAllColors() {
         return ColorMapper.map2TOs(colorDao.findAll());
     }
 
     @Override
+    @Transactional(readOnly = false)
     public CarTO updateCar(CarTO car) {
+        /*ColorEntity colorEntity = ColorMapper.toEntity(car.getColor());
+        colorEntity = colorDao.add(colorEntity);
+
+        TypeEntity typeEntity = TypeMapper.toEntity(car.getType());
+        typeEntity = typeDao.add(typeEntity);*/
+
         CarEntity carEntity = CarMapper.toEntity(car);
-        return CarMapper.toTO(carDao.save(carEntity));
+        /*carEntity.setType(typeEntity);
+        carEntity.setColor(colorEntity);*/
+
+        return CarMapper.toTO(carDao.update(carEntity));
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteCar(long car_id) {
         carDao.deleteCar(car_id);
     }
 
     @Override
-    public  void deleteColor(long color_id){
+    @Transactional(readOnly = false)
+    public void deleteColor(long color_id) {
         colorDao.delete(color_id);
     }
 
@@ -107,6 +130,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteType(long type_id) {
         typeDao.delete(type_id);
     }

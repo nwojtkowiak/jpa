@@ -1,7 +1,5 @@
 package com.capgemini.types;
 
-import com.sun.jndi.cosnaming.IiopUrl;
-
 import java.util.Collection;
 import java.util.Date;
 
@@ -25,7 +23,7 @@ public class EmployeeTO {
         this.position = position;
     }
 
-    public EmployeeTO(Long id,String firstName, String lastName,
+    public EmployeeTO(Long id, String firstName, String lastName,
                       Date birthDay, AddressTO address,
                       OfficeTO office, PositionTO position,
                       Collection<CarTO> cars) {
@@ -114,10 +112,11 @@ public class EmployeeTO {
             super();
         }
 
-        public EmployeeTOBuilder withId(Long id){
+        public EmployeeTOBuilder withId(Long id) {
             this.id = id;
             return this;
         }
+
         public EmployeeTOBuilder withFirstName(String firstName) {
             this.firstName = firstName;
             return this;
@@ -155,8 +154,8 @@ public class EmployeeTO {
 
 
         public EmployeeTO build() {
-            checkBeforeBuild(firstName, lastName, birthDay, address, office,position);
-            return new EmployeeTO(id,firstName, lastName, birthDay, address, office,position,cars);
+            checkBeforeBuild(firstName, lastName, birthDay, address, office, position);
+            return new EmployeeTO(id, firstName, lastName, birthDay, address, office, position, cars);
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position) {
@@ -165,7 +164,8 @@ public class EmployeeTO {
             }
 
         }
-        private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position, Collection<CarTO>cars) {
+
+        private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position, Collection<CarTO> cars) {
             if (firstName == null || lastName == null || birthDay == null || address == null || office == null || position == null || cars == null) {
                 throw new RuntimeException("Incorrect employee to be created");
             }

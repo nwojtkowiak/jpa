@@ -24,7 +24,7 @@ public class AddressMapper {
             return null;
         }
 
-        return new AddressEntity(addressTO.getStreet(),addressTO.getBuilding(),
-                addressTO.getFlat(),addressTO.getPost_code(),addressTO.getCity());
+        return new AddressEntity(addressTO.getId(), addressTO.getStreet(), addressTO.getBuilding(),
+                addressTO.getFlat(), addressTO.getPost_code(), addressTO.getCity());
     }
 }

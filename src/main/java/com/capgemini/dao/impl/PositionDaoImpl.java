@@ -12,14 +12,14 @@ import javax.persistence.TypedQuery;
 public class PositionDaoImpl extends AbstractDao<PositionEntity, Long> implements PositionDao {
 
     @Override
-    public PositionEntity add(PositionEntity entity){
+    public PositionEntity add(PositionEntity entity) {
         TypedQuery<PositionEntity> query = entityManager.createQuery(
-                "select e from PositionEntity e where e.name = :name",PositionEntity.class);
+                "select e from PositionEntity e where e.name = :name", PositionEntity.class);
         query.setParameter("name", entity.getName());
 
-        try{
+        try {
             return query.getSingleResult();
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             return save(entity);
         }
 

@@ -1,13 +1,11 @@
 package com.capgemini.service;
 
 
-import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.types.*;
 import com.capgemini.types.CarTO.CarTOBuilder;
 import com.capgemini.types.ColorTO.ColorToBuilder;
 import com.capgemini.types.EmployeeTO.EmployeeTOBuilder;
 import com.capgemini.types.TypeTO.TypeToBuilder;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Year;
 import java.sql.Date;
+import java.time.Year;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -25,10 +23,10 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class CarServiceTest {
 
-	@Autowired
-	private CarService carService;
+    @Autowired
+    private CarService carService;
 
-	@Autowired
+    @Autowired
     private EmployeeService employeeService;
 /*
 		private String mark;
@@ -41,16 +39,16 @@ public class CarServiceTest {
 		private TypeTO type;
  */
 
-    private TypeTO createType(String name){
+    private TypeTO createType(String name) {
         return new TypeToBuilder().withName(name).build();
     }
 
-    private ColorTO createColor(String name){
+    private ColorTO createColor(String name) {
         return new ColorToBuilder().withName(name).build();
     }
 
     private CarTO createCar(String mark, String model, int prodYear, double capacity,
-                            int power, long course, ColorTO colorTo, TypeTO typeTo){
+                            int power, long course, ColorTO colorTo, TypeTO typeTo) {
 
 
         CarTO car = new CarTOBuilder().withMark(mark)
@@ -65,7 +63,19 @@ public class CarServiceTest {
         return car;
     }
 
-	@Test
+    private EmployeeTO createEmployee(String firstName, String lastName, Date date) {
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().withStreet("Polarowa").withBuilding(2).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        OfficeTO officeTO = new OfficeTO.OfficeTOBuilder().withAddress(addressOfficeTO).withName("Polarowa").withPhoneNumber("7894561212").build();
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+
+        return new EmployeeTOBuilder().
+                withFirstName(firstName).
+                withLastName(lastName).
+                withBirthDay(date).withAddress(addressTO).withOffice(officeTO).withPosition(positionTO).build();
+    }
+
+    @Test
     @Transactional
     public void testShouldFindCarByIdAfterAdd() {
         // given
@@ -80,8 +90,8 @@ public class CarServiceTest {
         carService.addType(typeCombi);
 
 
-        CarTO createdCar = createCar("Peugeot","206",2002, 1.4d, 60,
-                234500, colorSilver,typeHatchback);
+        CarTO createdCar = createCar("Peugeot", "206", 2002, 1.4d, 60,
+                234500, colorSilver, typeHatchback);
         CarTO savedCar = carService.addCar(createdCar);
 
         // when
@@ -90,7 +100,7 @@ public class CarServiceTest {
         // then
         assertNotNull(foundCar);
         assertEquals(savedCar.getMark(), foundCar.getMark());
-        assertEquals(savedCar.getCapacity(), foundCar.getCapacity(),0.1);
+        assertEquals(savedCar.getCapacity(), foundCar.getCapacity(), 0.1);
         assertEquals(savedCar.getColor(), foundCar.getColor());
         assertEquals(savedCar.getCourse(), foundCar.getCourse());
         assertEquals(savedCar.getModel(), foundCar.getModel());
@@ -109,8 +119,8 @@ public class CarServiceTest {
         TypeTO typeHatchback = createType("hatchback");
         carService.addType(typeHatchback);
 
-        CarTO createdCar = createCar("Peugeot","206",2002, 1.4d, 60,
-                234500, colorSilver,typeHatchback);
+        CarTO createdCar = createCar("Peugeot", "206", 2002, 1.4d, 60,
+                234500, colorSilver, typeHatchback);
         CarTO savedCar = carService.addCar(createdCar);
 
         // when
@@ -124,14 +134,14 @@ public class CarServiceTest {
 
     @Test
     @Transactional
-    public void testShouldDeleteCarsAfterDeleteColor(){
+    public void testShouldDeleteCarsAfterDeleteColor() {
         ColorTO colorSilver = createColor("silver");
         ColorTO colorBlack = createColor("black");
         TypeTO typeHatchback = createType("hatchback");
         TypeTO typeCombi = createType("combi");
 
-        CarTO createdCar = createCar("Opel","Corsa",2002, 1.4d, 60,
-                234500, colorBlack,typeHatchback);
+        CarTO createdCar = createCar("Opel", "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack, typeHatchback);
         CarTO savedCar = carService.addCar(createdCar);
 
 
@@ -141,8 +151,8 @@ public class CarServiceTest {
         assertEquals(2, colors.size());
         assertEquals(0, cars.size());
 
-        createdCar = createCar("Nissan","Almera",2002, 1.4d, 60,
-                234500, colorBlack,typeCombi);
+        createdCar = createCar("Nissan", "Almera", 2002, 1.4d, 60,
+                234500, colorBlack, typeCombi);
         savedCar = carService.addCar(createdCar);
 
         carService.deleteColor(colors.get(0).getId());
@@ -162,16 +172,16 @@ public class CarServiceTest {
         String mark = "Opel";
         String type = "hatchback";
 
-        CarTO createdCar = createCar(mark,"Corsa",2002, 1.4d, 60,
-                234500, colorBlack,typeHatchback);
+        CarTO createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack, typeHatchback);
         CarTO savedCar = carService.addCar(createdCar);
 
-        createdCar = createCar(mark,"Corsa",2002, 1.4d, 60,
-                234500, colorBlack,typeHatchback);
+        createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack, typeHatchback);
         savedCar = carService.addCar(createdCar);
 
-        createdCar = createCar(mark,"Corsa",2002, 1.4d, 60,
-                234500, colorBlack,typeCombi);
+        createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack, typeCombi);
         savedCar = carService.addCar(createdCar);
 
         // when
@@ -197,8 +207,8 @@ public class CarServiceTest {
         typeHatchback = carService.addType(typeHatchback);
         typeCombi = carService.addType(typeCombi);
 
-        CarTO createdCar = createCar(mark,"Corsa",2002, 1.4d, 60,
-                234500, colorBlack,typeHatchback);
+        CarTO createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack, typeHatchback);
         CarTO savedCar = carService.addCar(createdCar);
 
         // when
@@ -214,46 +224,32 @@ public class CarServiceTest {
 
     @Test
     @Transactional
-    public void testShouldReturnKeeper() {
-
-        //TODO add save address, office and position to db
-        //TODO check and repair cascade
+    public void testShouldReturnCarByKeeperAfterAddKeeper() {
 
         // given
         ColorTO colorBlack = createColor("black");
         TypeTO typeHatchback = createType("hatchback");
-        TypeTO typeCombi = createType("combi");
 
 
-        CarTO createdCar = createCar("Opel","Corsa",2002, 1.4d, 60,
-                234500, colorBlack,typeHatchback);
+        CarTO createdCar = createCar("Opel", "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack, typeHatchback);
         CarTO savedCar = carService.addCar(createdCar);
 
-        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
-        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().withStreet("Polarowa").withBuilding(2).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
-        OfficeTO officeTO = new OfficeTO.OfficeTOBuilder().withAddress(addressOfficeTO).withName("Polarowa").withPhoneNumber("7894561212").build();
-        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
-
-        EmployeeTO employeeTO = new EmployeeTOBuilder().
-                withFirstName("F").
-                withLastName("L").
-                withBirthDay(new Date(19910408)).withAddress(addressTO).withOffice(officeTO).withPosition(positionTO).build();
+        EmployeeTO employeeTO = createEmployee("F", "L", new Date(19910102));
         employeeTO = employeeService.addEmployee(employeeTO);
 
         // when
-        carService.addKeeper(savedCar,employeeTO);
-        try{
+        carService.addKeeper(savedCar, employeeTO);
+
+        // then
+        try {
             List<CarTO> foundCars = carService.findCarsByKeeper(employeeTO.getId());
-            // then
             assertNotNull(foundCars);
             assertEquals(1, foundCars.size());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             assertNotNull(employeeTO);
             assertNotNull(savedCar);
         }
-
-
-
     }
 
 

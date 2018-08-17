@@ -1,8 +1,6 @@
 package com.capgemini.dao.impl;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
+import com.capgemini.dao.Dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,8 +8,9 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
-
-import com.capgemini.dao.Dao;
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 @Transactional(Transactional.TxType.SUPPORTS)
 public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K> {
@@ -42,7 +41,7 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = builder.createQuery(getDomainClass());
         criteriaQuery.from(getDomainClass());
-        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);	
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }
 
