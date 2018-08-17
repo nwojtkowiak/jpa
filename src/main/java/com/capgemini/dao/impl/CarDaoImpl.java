@@ -3,6 +3,7 @@ package com.capgemini.dao.impl;
 import com.capgemini.dao.CarDao;
 import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.EmployeeEntity;
+import org.hibernate.exception.spi.ViolatedConstraintNameExtracter;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -37,6 +38,8 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
             return query.getResultList();
         } catch (NoResultException e) {
             return new ArrayList<>();
+        } catch (Exception e){
+            return new ArrayList<>();
         }
     }
 
@@ -55,7 +58,6 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         return update(carEntity);
     }
 
-    //TODO
     @Override
     public void addKeeper(CarEntity carEntity, EmployeeEntity employeeEntity) {
         TypedQuery<EmployeeEntity> query = entityManager.createQuery(

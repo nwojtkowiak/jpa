@@ -5,6 +5,7 @@ import com.capgemini.dao.OfficeDao;
 import com.capgemini.domain.AddressEntity;
 import com.capgemini.domain.OfficeEntity;
 import com.capgemini.mappers.AddressMapper;
+import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.mappers.OfficeMapper;
 import com.capgemini.service.EmployeeService;
 import com.capgemini.service.OfficeService;
@@ -62,17 +63,17 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public void delEmployeeFromOffice(long employee_id, long office_id) {
-
+        employeeService.delOfficeFromEmployee(employee_id,office_id);
     }
 
     @Override
     public List<EmployeeTO> findEmployeesByOffice(long office_id) {
-        return null;
+      return employeeService.findEmployeeByOfficeId(office_id);
     }
 
     @Override
     public List<EmployeeTO> findEmployeeByOfficeAndCar(long office_id, long car_id) {
-        return null;
+        return employeeService.findEmployeeByOfficeIdAndCarId(office_id,car_id);
     }
 
     @Override

@@ -224,6 +224,7 @@ public class CarServiceTest {
 
     @Test
     @Transactional
+    //TODO spr mysql
     public void testShouldReturnCarByKeeperAfterAddKeeper() {
 
         // given

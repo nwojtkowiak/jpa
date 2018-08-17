@@ -159,14 +159,14 @@ public class EmployeeTO {
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position) {
-            if (firstName == null || lastName == null || birthDay == null || address == null || office == null || position == null) {
+            if (firstName == null || lastName == null || birthDay == null || address == null ||  position == null) {
                 throw new RuntimeException("Incorrect employee to be created");
             }
 
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position, Collection<CarTO> cars) {
-            if (firstName == null || lastName == null || birthDay == null || address == null || office == null || position == null || cars == null) {
+            if (firstName == null || lastName == null || birthDay == null || address == null ||  position == null || cars == null) {
                 throw new RuntimeException("Incorrect employee to be created");
             }
 

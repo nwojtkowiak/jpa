@@ -48,14 +48,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<EmployeeTO> findEmployeeByOfficeId(long office_id) {
+
+        return EmployeeMapper.map2TOs(employeeDao.findAllByOfficeId(office_id));
+    }
+
+    @Override
+    public List<EmployeeTO> findEmployeeByOfficeIdAndCarId(long office_id, long car_id) {
+
+        return EmployeeMapper.map2TOs(employeeDao.findAllByOfficeIdAndCarId(office_id,car_id));
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public EmployeeTO addEmployee(EmployeeTO employee) {
         AddressEntity addressEntity = AddressMapper.toEntity(employee.getAddress());
         addressEntity = addressDao.add(addressEntity);
 
-        OfficeEntity officeEntity = OfficeMapper.toEntity(employee.getOffice());
-        addressDao.add(officeEntity.getAddress());
-        officeEntity = officeDao.add(officeEntity);
+        OfficeEntity officeEntity = null;
+
+        if(employee.getOffice() != null) {
+            officeEntity =OfficeMapper.toEntity(employee.getOffice());
+            addressDao.add(officeEntity.getAddress());
+            officeEntity = officeDao.add(officeEntity);
+        }
 
         PositionEntity positionEntity = PositionMapper.toEntity(employee.getPosition());
         positionEntity = positionDao.add(positionEntity);
@@ -74,8 +90,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeTO addOfficeToEmployee(long employee_id, long office_id) {
+    public EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id) {
         EmployeeEntity employeeEntity = employeeDao.setOffice(employee_id, office_id);
+        return EmployeeMapper.toTO(employeeEntity);
+    }
+
+    @Override
+    public EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id) {
+        EmployeeEntity employeeEntity = employeeDao.removeOffice(employee_id);
         return EmployeeMapper.toTO(employeeEntity);
     }
 

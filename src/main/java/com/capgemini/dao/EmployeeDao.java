@@ -2,6 +2,8 @@ package com.capgemini.dao;
 
 import com.capgemini.domain.EmployeeEntity;
 
+import java.util.List;
+
 /*
 i.	Dodaj samochód,
 ii.	Usuń samochód,
@@ -14,10 +16,17 @@ public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
 
     EmployeeEntity add(EmployeeEntity entity);
 
-    void deleteEmployee(long id);
+    void deleteEmployee(Long id);
 
     EmployeeEntity updateEmployeeInfo(EmployeeEntity employeeEntity);
 
-    EmployeeEntity setOffice(long employee_id, long office_id);
+    EmployeeEntity setOffice(Long employee_id, Long office_id);
+
+    EmployeeEntity removeOffice(Long employee_id);
+
+    List<EmployeeEntity> findAllByOfficeId(Long office_id);
+
+    List<EmployeeEntity> findAllByOfficeIdAndCarId(long office_id, long car_id);
+
 
 }

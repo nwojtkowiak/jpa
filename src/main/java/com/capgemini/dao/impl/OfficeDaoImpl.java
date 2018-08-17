@@ -30,4 +30,6 @@ public class OfficeDaoImpl extends AbstractDao<OfficeEntity, Long> implements Of
     }
 
 
+
+
 }

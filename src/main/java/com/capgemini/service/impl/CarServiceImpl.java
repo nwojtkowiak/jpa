@@ -97,15 +97,7 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional(readOnly = false)
     public CarTO updateCar(CarTO car) {
-        /*ColorEntity colorEntity = ColorMapper.toEntity(car.getColor());
-        colorEntity = colorDao.add(colorEntity);
-
-        TypeEntity typeEntity = TypeMapper.toEntity(car.getType());
-        typeEntity = typeDao.add(typeEntity);*/
-
         CarEntity carEntity = CarMapper.toEntity(car);
-        /*carEntity.setType(typeEntity);
-        carEntity.setColor(colorEntity);*/
 
         return CarMapper.toTO(carDao.update(carEntity));
     }

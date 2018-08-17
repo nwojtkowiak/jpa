@@ -22,7 +22,13 @@ public interface EmployeeService {
 
     void deleteEmployee(long employee_id);
 
-    EmployeeTO addOfficeToEmployee(long employee_id, long office_id);
+    EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id);
+
+    List<EmployeeTO> findEmployeeByOfficeId(long office_id);
+
+    List<EmployeeTO> findEmployeeByOfficeIdAndCarId(long office_id, long car_id);
+
+    EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id);
 
 
 }
