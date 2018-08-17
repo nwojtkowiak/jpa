@@ -88,7 +88,7 @@ public class OfficeTO {
 
         public OfficeTO build() {
             checkBeforeBuild(name, phoneNumber, address);
-            return new OfficeTO(name, phoneNumber, address);
+            return new OfficeTO(id,name, phoneNumber, address);
         }
 
         private void checkBeforeBuild(String name, String phoneNumber, AddressTO address) {

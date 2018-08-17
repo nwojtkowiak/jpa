@@ -11,7 +11,7 @@ public class AddressMapper {
         }
 
         return new AddressTOBuilder().withBuilding(addressEntity.getBuilding())
-               // .withId(addressEntity.getId())
+                .withId(addressEntity.getId())
                 .withStreet(addressEntity.getStreet())
                 .withCity(addressEntity.getCity())
                 .withPostCode(addressEntity.getPost_code())

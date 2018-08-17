@@ -15,7 +15,7 @@ vi.	wyszukaj po opiekunie
 */
 public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
 
-    EmployeeEntity addEmployee(EmployeeEntity employeeEntity);
+    EmployeeEntity add(EmployeeEntity entity);
 
 	void deleteEmployee(long id);
 

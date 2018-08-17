@@ -41,7 +41,7 @@ public class EmployeeMapper {
             return null;
         }
 
-        return new EmployeeEntity(employeeTO.getFirstName(),employeeTO.getLastName(),
+        return new EmployeeEntity(employeeTO.getId(),employeeTO.getFirstName(),employeeTO.getLastName(),
                 employeeTO.getBirthDay(),AddressMapper.toEntity(employeeTO.getAddress()),
                 OfficeMapper.toEntity(employeeTO.getOffice()),PositionMapper.toEntity(employeeTO.getPosition()));
 

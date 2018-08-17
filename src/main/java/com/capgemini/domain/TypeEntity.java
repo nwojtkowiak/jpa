@@ -1,8 +1,5 @@
 package com.capgemini.domain;
 
-import com.capgemini.listeners.InsertListener;
-import com.capgemini.listeners.UpdateListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -22,6 +19,10 @@ public class TypeEntity /*extends  AbstractEntity */ implements Serializable {
         this.name = name;
     }
 
+    public TypeEntity(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

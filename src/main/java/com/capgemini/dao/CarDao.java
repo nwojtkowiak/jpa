@@ -20,7 +20,7 @@ public interface CarDao extends Dao<CarEntity, Long> {
 
     List<CarEntity> findCarsByKeeper(long employee_id);
 
-    CarEntity addCar(CarEntity carEntity);
+    CarEntity add(CarEntity entity);
 
 	void deleteCar(long id);
 

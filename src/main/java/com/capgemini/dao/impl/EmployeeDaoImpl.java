@@ -15,8 +15,8 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
 
 
     @Override
-    public EmployeeEntity addEmployee(EmployeeEntity employeeEntity) {
-        return save(employeeEntity);
+    public EmployeeEntity add(EmployeeEntity entity) {
+        return save(entity);
     }
 
     @Override

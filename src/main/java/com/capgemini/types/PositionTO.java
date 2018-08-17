@@ -49,7 +49,7 @@ public class PositionTO {
 
         public PositionTO build() {
             checkBeforeBuild(name);
-            return new PositionTO(name);
+            return new PositionTO(id,name);
         }
 
         private void checkBeforeBuild(String name) {

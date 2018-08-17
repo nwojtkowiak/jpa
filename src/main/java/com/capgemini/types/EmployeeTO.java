@@ -25,7 +25,7 @@ public class EmployeeTO {
         this.position = position;
     }
 
-    public EmployeeTO(String firstName, String lastName,
+    public EmployeeTO(Long id,String firstName, String lastName,
                       Date birthDay, AddressTO address,
                       OfficeTO office, PositionTO position,
                       Collection<CarTO> cars) {
@@ -156,7 +156,7 @@ public class EmployeeTO {
 
         public EmployeeTO build() {
             checkBeforeBuild(firstName, lastName, birthDay, address, office,position);
-            return new EmployeeTO(firstName, lastName, birthDay, address, office,position,cars);
+            return new EmployeeTO(id,firstName, lastName, birthDay, address, office,position,cars);
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position) {

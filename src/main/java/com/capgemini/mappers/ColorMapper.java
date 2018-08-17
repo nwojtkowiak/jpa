@@ -24,7 +24,7 @@ public class ColorMapper {
         if (colorTO == null)
             return null;
 
-        return new ColorEntity(null, colorTO.getName());
+        return new ColorEntity(colorTO.getId(), colorTO.getName());
 
     }
 

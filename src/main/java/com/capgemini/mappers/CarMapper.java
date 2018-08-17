@@ -21,7 +21,7 @@ public class CarMapper {
             return null;
         }
 
-		Collection<EmployeeTO> keepers = EmployeeMapper.map2TOs(carEntity.getKeepers());
+		//Collection<EmployeeTO> keepers = EmployeeMapper.map2TOs(carEntity.getKeepers());
 		ColorTO colorTO = ColorMapper.toTO(carEntity.getColor());
 		TypeTO typeTO = TypeMapper.toTO(carEntity.getType());
 
@@ -34,7 +34,8 @@ public class CarMapper {
 				.withPower(carEntity.getPower())
 				.withProdYear(carEntity.getProdYear())
 				.withType(typeTO)
-				.withKeepers(keepers).build();
+				//.withKeepers(keepers)
+				.build();
 	}
 
 	public static CarEntity toEntity(CarTO carTO) {
@@ -42,7 +43,7 @@ public class CarMapper {
             return null;
         }
 
-		return new CarEntity(null,carTO.getMark(),carTO.getModel(), carTO.getProdYear(),
+		return new CarEntity(carTO.getId(),carTO.getMark(),carTO.getModel(), carTO.getProdYear(),
                 carTO.getCapacity(), carTO.getPower(), carTO.getCourse(),
                 ColorMapper.toEntity(carTO.getColor()),
                 TypeMapper.toEntity(carTO.getType()));

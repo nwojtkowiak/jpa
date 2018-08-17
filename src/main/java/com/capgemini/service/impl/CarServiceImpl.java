@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,7 +42,11 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<CarTO> findCarsByKeeper(long employee_id) {
-        return CarMapper.map2TOs(carDao.findCarsByKeeper(employee_id));
+        List<CarEntity> lisOfCars = carDao.findCarsByKeeper(employee_id);
+        if(lisOfCars != null) {
+            return CarMapper.map2TOs(lisOfCars);
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -62,7 +67,7 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional(readOnly = false)
     public CarTO addCar(CarTO car) {
-        CarTO carTO = CarMapper.toTO(carDao.addCar(CarMapper.toEntity(car)));
+        CarTO carTO = CarMapper.toTO(carDao.add(CarMapper.toEntity(car)));
         return carTO;
     }
 
@@ -95,6 +100,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public TypeTO addType(TypeTO type) {
         TypeEntity typeEntity = TypeMapper.toEntity(type);
         return TypeMapper.toTO(typeDao.save(typeEntity));

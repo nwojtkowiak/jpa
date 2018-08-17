@@ -9,6 +9,11 @@ public class TypeTO {
         this.name = name;
     }
 
+    public TypeTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,7 +49,7 @@ public class TypeTO {
 
         public TypeTO build() {
             checkBeforeBuild(name);
-            return new TypeTO(name);
+            return new TypeTO(id,name);
         }
 
         private void checkBeforeBuild(String name) {

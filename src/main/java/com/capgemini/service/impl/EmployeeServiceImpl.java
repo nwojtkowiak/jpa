@@ -1,23 +1,11 @@
 package com.capgemini.service.impl;
 
-import com.capgemini.dao.CarDao;
-import com.capgemini.dao.ColorDao;
-import com.capgemini.dao.EmployeeDao;
-import com.capgemini.dao.TypeDao;
-import com.capgemini.domain.CarEntity;
-import com.capgemini.domain.ColorEntity;
-import com.capgemini.domain.EmployeeEntity;
-import com.capgemini.domain.TypeEntity;
-import com.capgemini.mappers.CarMapper;
-import com.capgemini.mappers.ColorMapper;
-import com.capgemini.mappers.EmployeeMapper;
-import com.capgemini.mappers.TypeMapper;
+import com.capgemini.dao.*;
+import com.capgemini.domain.*;
+import com.capgemini.mappers.*;
 import com.capgemini.service.CarService;
 import com.capgemini.service.EmployeeService;
-import com.capgemini.types.CarTO;
-import com.capgemini.types.ColorTO;
-import com.capgemini.types.EmployeeTO;
-import com.capgemini.types.TypeTO;
+import com.capgemini.types.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +18,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeDao employeeDao;
+
+    @Autowired
+    private AddressDao addressDao;
+
+    @Autowired
+    private OfficeDao officeDao;
+
+    @Autowired
+    private PositionDao positionDao;
 
     @Override
     public List<EmployeeTO> findAllEmployees() {
@@ -44,7 +41,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional(readOnly = false)
     public EmployeeTO addEmployee(EmployeeTO employee) {
+        AddressEntity addressEntity = AddressMapper.toEntity(employee.getAddress());
+        addressEntity = addressDao.add(addressEntity);
+
+        OfficeEntity officeEntity = OfficeMapper.toEntity(employee.getOffice());
+        addressDao.add(officeEntity.getAddress());
+        officeEntity = officeDao.add(officeEntity);
+
+        PositionEntity positionEntity = PositionMapper.toEntity(employee.getPosition());
+        positionEntity = positionDao.add(positionEntity);
+
         EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employee);
+        employeeEntity.setAddress(addressEntity);
+        employeeEntity.setOffice(officeEntity);
+        employeeEntity.setPosition(positionEntity);
+
         return EmployeeMapper.toTO(employeeDao.save(employeeEntity));
     }
 
@@ -52,4 +63,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(long employee_id) {
         employeeDao.deleteEmployee(employee_id);
     }
+
+
 }

@@ -5,8 +5,10 @@ import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.EmployeeEntity;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,15 +28,21 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
 
     @Override
     public List<CarEntity> findCarsByKeeper(long employee_id) {
-        TypedQuery<CarEntity> query = entityManager.createQuery(
-                "select car from CarEntity car where :employee_id member of car.keepers ", CarEntity.class);
+        Query/*TypedQuery<CarEntity>*/ query = entityManager.createQuery(
+                "select e.cars from EmployeeEntity e where id = :employee_id "/*, CarEntity.class*/);
         query.setParameter("employee_id", employee_id);
-        return query.getResultList();
+
+
+        try{
+            return query.getResultList();
+        }catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
-    public CarEntity addCar(CarEntity carEntity) {
-        return save(carEntity);
+    public CarEntity add(CarEntity entity) {
+        return save(entity);
     }
 
     @Override
@@ -53,9 +61,15 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         TypedQuery<EmployeeEntity> query = entityManager.createQuery (
                 "select e from EmployeeEntity e where e.id = :id", EmployeeEntity.class);
         query.setParameter("id", employeeEntity.getId());
-        EmployeeEntity foundEmployee = query.getSingleResult();
-        foundEmployee.getCars().add(carEntity);
 
-        entityManager.merge(foundEmployee);
+        try{
+            EmployeeEntity foundEmployee = query.getSingleResult();
+            foundEmployee.getCars().add(carEntity);
+            entityManager.merge(foundEmployee);
+
+        }catch (NoResultException e) {
+
+        }
+
     }
 }

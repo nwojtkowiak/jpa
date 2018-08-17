@@ -1,9 +1,6 @@
 package com.capgemini.service;
 
-import com.capgemini.types.CarTO;
-import com.capgemini.types.ColorTO;
-import com.capgemini.types.EmployeeTO;
-import com.capgemini.types.TypeTO;
+import com.capgemini.types.*;
 
 import java.util.List;
 
@@ -24,6 +21,8 @@ public interface EmployeeService {
 	EmployeeTO addEmployee(EmployeeTO employee);
 
 	void deleteEmployee(long employee_id);
+
+	//AddressTO addAddress(AddressTO address);
 
 
 }

@@ -32,7 +32,7 @@ public class CarEntity /*extends  AbstractEntity */ implements Serializable {
     @Column(nullable = false)
     private Long course;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL )
     @JoinColumn(name = "color_id")
     private ColorEntity color;
 
@@ -40,8 +40,8 @@ public class CarEntity /*extends  AbstractEntity */ implements Serializable {
     @JoinColumn(name = "type_id")
     private TypeEntity type;
 
-    @ManyToMany(mappedBy = "cars",fetch = FetchType.LAZY)
-    private Collection<EmployeeEntity> keepers;
+   /* @ManyToMany(mappedBy = "cars",fetch = FetchType.LAZY)
+    private Collection<EmployeeEntity> keepers;*/
 
     //czy trzeba robic bidirectional, czy moze byc bez tego i unidirectional
     /*@OneToMany(targetEntity = LoanEntity.class, mappedBy = "car", cascade = CascadeType.ALL)
@@ -99,7 +99,7 @@ public class CarEntity /*extends  AbstractEntity */ implements Serializable {
         return type;
     }
 
-    public Collection<EmployeeEntity> getKeepers() {
-        return keepers;
-    }
+//    public Collection<EmployeeEntity> getKeepers() {
+//        return keepers;
+//    }
 }
