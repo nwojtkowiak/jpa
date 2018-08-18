@@ -4,11 +4,8 @@ package com.capgemini.mappers;
 import com.capgemini.domain.CarEntity;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
-import com.capgemini.types.ColorTO;
-import com.capgemini.types.TypeTO;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,20 +17,18 @@ public class CarMapper {
             return null;
         }
 
-        //Collection<EmployeeTO> keepers = EmployeeMapper.map2TOs(carEntity.getKeepers());
-        ColorTO colorTO = ColorMapper.toTO(carEntity.getColor());
-        TypeTO typeTO = TypeMapper.toTO(carEntity.getType());
+        List<Long> loans = LoanMapper.map2TOs(carEntity.getLoans());
 
         return new CarTOBuilder().withCapacity(carEntity.getCapacity())
                 .withId(carEntity.getId())
-                .withColor(colorTO)
+                .withColor(carEntity.getColor().getId())
                 .withCourse(carEntity.getCourse())
                 .withMark(carEntity.getMark())
                 .withModel(carEntity.getModel())
                 .withPower(carEntity.getPower())
                 .withProdYear(carEntity.getProdYear())
-                .withType(typeTO)
-                //.withKeepers(keepers)
+                .withType(carEntity.getType().getId())
+                .withLoans(loans)
                 .build();
     }
 
@@ -43,12 +38,17 @@ public class CarMapper {
         }
 
         return new CarEntity(carTO.getId(), carTO.getMark(), carTO.getModel(), carTO.getProdYear(),
-                carTO.getCapacity(), carTO.getPower(), carTO.getCourse(),
-                ColorMapper.toEntity(carTO.getColor()),
-                TypeMapper.toEntity(carTO.getType()));
+                carTO.getCapacity(), carTO.getPower(), carTO.getCourse());
     }
 
-    public static List<CarTO> map2TOs(Collection<CarEntity> carEntities) {
+    public static List<Long> map2LongTOs(List<CarEntity> carEntities) {
+        if (carEntities != null) {
+            return carEntities.stream().map(CarEntity::getId).collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
+    public static List<CarTO> map2TOs(List<CarEntity> carEntities) {
         if (carEntities != null) {
             return carEntities.stream().map(CarMapper::toTO).collect(Collectors.toList());
         }

@@ -1,36 +1,27 @@
 package com.capgemini.types;
 
 import java.time.Year;
-import java.util.Collection;
+import java.util.List;
 
 public class CarTO {
 
+    private Long id;
     private String mark;
     private String model;
     private Year prodYear;
     private Double capacity;
     private Integer power;
     private Long course;
-    private ColorTO color;
-    private TypeTO type;
-    private Collection<EmployeeTO> keepers;
-    private Long id;
+    private Long color;
+    private Long type;
+    private List<Long> keepers;
+    private List<Long> loans;
 
-    public CarTO(String mark, String model, Year prodYear, double capacity, int power, long course, ColorTO color, TypeTO type) {
-        this.mark = mark;
-        this.model = model;
-        this.prodYear = prodYear;
-        this.capacity = capacity;
-        this.power = power;
-        this.course = course;
-        this.color = color;
-        this.type = type;
-    }
 
     public CarTO(Long id, String mark, String model, Year prodYear,
                  Double capacity, Integer power, Long course,
-                 ColorTO color, TypeTO type, Collection<EmployeeTO> keepers
-    ) {
+                 Long color, Long type, List<Long> keepers, List<Long> loans) {
+        this.id = id;
         this.mark = mark;
         this.model = model;
         this.prodYear = prodYear;
@@ -40,7 +31,8 @@ public class CarTO {
         this.color = color;
         this.type = type;
         this.keepers = keepers;
-        this.id = id;
+        this.loans = loans;
+
     }
 
     public Long getId() {
@@ -63,11 +55,11 @@ public class CarTO {
         return course;
     }
 
-    public ColorTO getColor() {
+    public Long getColor() {
         return color;
     }
 
-    public TypeTO getType() {
+    public Long getType() {
         return type;
     }
 
@@ -79,44 +71,12 @@ public class CarTO {
         return model;
     }
 
-    public void setMark(String mark) {
-        this.mark = mark;
+    public List<Long> getLoans() {
+        return loans;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setProdYear(Year prodYear) {
-        this.prodYear = prodYear;
-    }
-
-    public void setCapacity(Double capacity) {
-        this.capacity = capacity;
-    }
-
-    public void setPower(Integer power) {
-        this.power = power;
-    }
-
-    public void setCourse(Long course) {
-        this.course = course;
-    }
-
-    public void setColor(ColorTO color) {
-        this.color = color;
-    }
-
-    public void setType(TypeTO type) {
+    public void setType(Long type) {
         this.type = type;
-    }
-
-    public void setKeepers(Collection<EmployeeTO> keepers) {
-        this.keepers = keepers;
-    }
-
-    public Collection<EmployeeTO> getKeepers() {
-        return keepers;
     }
 
     public static class CarTOBuilder {
@@ -128,9 +88,10 @@ public class CarTO {
         private Double capacity;
         private Integer power;
         private Long course;
-        private ColorTO color;
-        private TypeTO type;
-        private Collection<EmployeeTO> keepers;
+        private Long color;
+        private Long type;
+        private List<Long> keepers;
+        private List<Long> loans;
 
         public CarTOBuilder() {
             super();
@@ -171,34 +132,30 @@ public class CarTO {
             return this;
         }
 
-        public CarTOBuilder withColor(ColorTO color) {
+        public CarTOBuilder withColor(Long color) {
             this.color = color;
             return this;
         }
 
-        public CarTOBuilder withType(TypeTO type) {
+        public CarTOBuilder withType(Long type) {
             this.type = type;
             return this;
         }
 
-        public CarTOBuilder withKeepers(Collection<EmployeeTO> keepers) {
-            this.keepers = keepers;
+        public CarTOBuilder withLoans(List<Long> loans) {
+            this.loans = loans;
             return this;
         }
 
-        /*public AddressTOBuilder withId(long id) {
-            this.id = id;
-            return this;
-        }*/
 
         public CarTO build() {
             checkBeforeBuild(mark, model, prodYear, capacity, power, course, color, type);
-            return new CarTO(id, mark, model, prodYear, capacity, power, course, color, type, keepers);
+            return new CarTO(id, mark, model, prodYear, capacity, power, course, color, type, keepers,loans);
         }
 
         private void checkBeforeBuild(String mark, String model, Year prodYear,
                                       Double capacity, Integer power, Long course,
-                                      ColorTO color, TypeTO type) {
+                                      Long color, Long type) {
             if (mark == null || model == null || prodYear == null ||
                     capacity == null || power == null || course == null ||
                     color == null || type == null) {
@@ -213,8 +170,8 @@ public class CarTO {
     @Override
     public String toString() {
         return "CarTo " + " id=" + id + "]" + "[mark=" + mark + ", model=" + model + ", prodYear=" + prodYear +
-                ", capacity=" + capacity + ", power=" + power + ", color=" + color.getName() +
-                ", type=" + type.getName();
+                ", capacity=" + capacity + ", power=" + power + ", color=" + color +
+                ", type=" + type;
     }
 
     @Override

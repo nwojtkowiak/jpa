@@ -13,7 +13,9 @@ import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.mappers.OfficeMapper;
 import com.capgemini.mappers.PositionMapper;
 import com.capgemini.service.EmployeeService;
+import com.capgemini.types.AddressTO;
 import com.capgemini.types.EmployeeTO;
+import com.capgemini.types.PositionTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,18 +64,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional(readOnly = false)
     public EmployeeTO addEmployee(EmployeeTO employee) {
-        AddressEntity addressEntity = AddressMapper.toEntity(employee.getAddress());
+        AddressEntity addressEntity = addressDao.findOne(employee.getAddress());
         addressEntity = addressDao.add(addressEntity);
 
         OfficeEntity officeEntity = null;
 
         if(employee.getOffice() != null) {
-            officeEntity =OfficeMapper.toEntity(employee.getOffice());
+            officeEntity = officeDao.findOne(employee.getOffice());
             addressDao.add(officeEntity.getAddress());
             officeEntity = officeDao.add(officeEntity);
         }
 
-        PositionEntity positionEntity = PositionMapper.toEntity(employee.getPosition());
+        PositionEntity positionEntity = positionDao.findOne(employee.getPosition());
         positionEntity = positionDao.add(positionEntity);
 
         EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employee);
@@ -98,7 +100,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id) {
         EmployeeEntity employeeEntity = employeeDao.removeOffice(employee_id);
+        employeeEntity.setOffice(null);
         return EmployeeMapper.toTO(employeeEntity);
+    }
+
+    @Override
+    public PositionTO addPosition(PositionTO position) {
+        PositionEntity positionEntity = PositionMapper.toEntity(position);
+        return PositionMapper.toTO(positionDao.add(positionEntity));
     }
 
 

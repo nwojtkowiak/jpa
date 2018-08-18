@@ -13,16 +13,9 @@ import java.sql.Timestamp;
 @EntityListeners({UpdateListener.class, InsertListener.class})
 public class LoanEntity extends AbstractEntity implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-//    @ManyToOne
-//    private CustomerEntity customer;
-//
-//    @ManyToOne
-//    private CarEntity car;
 
     @ManyToOne
     private OfficeEntity officeFrom;
@@ -31,20 +24,15 @@ public class LoanEntity extends AbstractEntity implements Serializable {
     private OfficeEntity officeTo;
 
     @Column(nullable = false)
-    //@Temporal(TemporalType.TIMESTAMP)
     private Timestamp dateFrom;
 
     @Column(nullable = true)
-    //@Temporal(TemporalType.TIMESTAMP)
     private Timestamp dateTo;
 
-
     @ManyToOne
-    @JoinColumn(name = "car", nullable = false)
     private CarEntity car;
 
     @ManyToOne
-    @JoinColumn(name = "customer", nullable = false)
     private CustomerEntity customer;
 
     @Column(nullable = false)
@@ -55,6 +43,12 @@ public class LoanEntity extends AbstractEntity implements Serializable {
     public LoanEntity() {
     }
 
+    public LoanEntity(Long id, Timestamp dateFrom, Timestamp dateTo, double amount) {
+        this.id = id;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.amount = amount;
+    }
 
     public Long getId() {
         return id;

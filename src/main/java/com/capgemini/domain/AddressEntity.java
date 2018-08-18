@@ -15,14 +15,19 @@ public class AddressEntity extends AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(nullable = false, length = 50)
     private String street;
+
     @Column(nullable = false)
     private int building;
+
     @Column(nullable = true)
     private int flat;
+
     @Column(nullable = true, length = 10)
     private String post_code;
+
     @Column(nullable = false, length = 50)
     private String city;
 

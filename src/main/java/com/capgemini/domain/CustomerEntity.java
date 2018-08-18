@@ -5,7 +5,9 @@ import com.capgemini.listeners.UpdateListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -17,16 +19,22 @@ public class CustomerEntity extends AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(nullable = false, length = 45)
     private String firstName;
+
     @Column(nullable = false, length = 45)
     private String lastName;
+
     @Column(nullable = false, length = 45)
     private String email;
+
     @Column(nullable = false, length = 20)
     private String phoneNumber;
+
     @Column(nullable = false)
-    private Timestamp birthDay;
+    private Date birthDay;
+
     @Column(nullable = false, length = 20)
     private String creditCard;
 
@@ -34,17 +42,22 @@ public class CustomerEntity extends AbstractEntity implements Serializable {
     @JoinColumn(name = "address_id", nullable = false)
     private AddressEntity address;
 
-    //czy trzeba robic bidirectional, czy moze byc bez tego i unidirectional
-	/*@OneToMany(targetEntity = LoanEntity.class, mappedBy = "customer", cascade = CascadeType.ALL)
-	private Set<LoanEntity> loans = new HashSet<>();*/
+    @OneToMany(targetEntity = LoanEntity.class, mappedBy = "customer", cascade = CascadeType.REMOVE)
+    private List<LoanEntity> loans = new LinkedList<>();
 
     // for hibernate
     public CustomerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName) {
+    public CustomerEntity(Long id, String firstName, String lastName, String email,
+                          String phoneNumber, Date birthDay, String creditCard) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.birthDay = birthDay;
+        this.creditCard = creditCard;
     }
 
     public Long getId() {
@@ -59,27 +72,15 @@ public class CustomerEntity extends AbstractEntity implements Serializable {
         return lastName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public AddressEntity getAddress() {
         return address;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public Timestamp getBirthDay() {
+    public Date getBirthDay() {
         return birthDay;
     }
 

@@ -2,9 +2,11 @@ package com.capgemini.service.impl;
 
 import com.capgemini.dao.CarDao;
 import com.capgemini.dao.ColorDao;
+import com.capgemini.dao.LoanDao;
 import com.capgemini.dao.TypeDao;
 import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.ColorEntity;
+import com.capgemini.domain.LoanEntity;
 import com.capgemini.domain.TypeEntity;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.mappers.ColorMapper;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -34,6 +37,10 @@ public class CarServiceImpl implements CarService {
 
     @Autowired
     private TypeDao typeDao;
+
+    //TODO zamienić na serwis
+    @Autowired
+    private LoanDao loanDao;
 
     @Override
     public List<CarTO> findAllCars() {
@@ -62,16 +69,17 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional(readOnly = false)
     public void addKeeper(CarTO carTO, EmployeeTO employeeTO) {
+
         carDao.addKeeper(CarMapper.toEntity(carTO), EmployeeMapper.toEntity(employeeTO));
     }
 
     @Override
     @Transactional(readOnly = false)
     public CarTO addCar(CarTO car) {
-        ColorEntity colorEntity = ColorMapper.toEntity(car.getColor());
+        ColorEntity colorEntity = colorDao.findOne(car.getColor());
         colorEntity = colorDao.add(colorEntity);
 
-        TypeEntity typeEntity = TypeMapper.toEntity(car.getType());
+        TypeEntity typeEntity = typeDao.findOne(car.getType());
         typeEntity = typeDao.add(typeEntity);
 
         CarEntity carEntity = CarMapper.toEntity(car);
@@ -99,6 +107,12 @@ public class CarServiceImpl implements CarService {
     public CarTO updateCar(CarTO car) {
         CarEntity carEntity = CarMapper.toEntity(car);
 
+        carEntity.setColor(colorDao.findOne(car.getColor()));
+        carEntity.setType(typeDao.findOne(car.getType()));
+        List<LoanEntity> loans = new LinkedList<>();
+        for(Long loanId : car.getLoans()){
+            loans.add(loanDao.findOne(loanId));
+        }
         return CarMapper.toTO(carDao.update(carEntity));
     }
 

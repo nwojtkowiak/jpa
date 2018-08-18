@@ -5,6 +5,8 @@ import com.capgemini.listeners.UpdateListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name = "OFFICE")
@@ -25,14 +27,19 @@ public class OfficeEntity extends AbstractEntity implements Serializable {
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
+    @OneToMany(targetEntity = LoanEntity.class, mappedBy = "officeFrom", cascade = CascadeType.REMOVE)
+    private List<LoanEntity> loansFrom = new LinkedList<>();
+
+    @OneToMany(targetEntity = LoanEntity.class, mappedBy = "officeTo", cascade = CascadeType.REMOVE)
+    private List<LoanEntity> loansTo = new LinkedList<>();
+
     public OfficeEntity() {
 
     }
 
-    public OfficeEntity(String name, String phoneNumber, AddressEntity address) {
+    public OfficeEntity(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.address = address;
     }
 
     public Long getId() {

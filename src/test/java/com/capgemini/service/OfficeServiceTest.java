@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.time.Year;
 import java.util.List;
 
+import static com.capgemini.service.HelpMethods.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -31,64 +32,11 @@ public class OfficeServiceTest {
     @Autowired
     private CarService carService;
 
-
-    private OfficeTO createOffice(String name, String phoneNumber) {
-        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
-                withStreet("Polarowa").withBuilding(2).
-                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
-
-        OfficeTO officeTO = new OfficeTO.OfficeTOBuilder().
-                withAddress(addressOfficeTO).withName(name).
-                withPhoneNumber(phoneNumber).build();
-
-        return officeTO;
-    }
-
-    private EmployeeTO createEmployee(String firstName, String lastName, Date date) {
-        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
-
-        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
-
-        return new EmployeeTOBuilder().
-                withFirstName(firstName).
-                withLastName(lastName).
-                withBirthDay(date).withAddress(addressTO).withOffice(null).withPosition(positionTO).build();
-    }
-
-    private TypeTO createType(String name) {
-        return new TypeTO.TypeToBuilder().withName(name).build();
-    }
-
-    private ColorTO createColor(String name) {
-        return new ColorTO.ColorToBuilder().withName(name).build();
-    }
-
-    private CarTO createCar(String mark, String model, int prodYear, double capacity,
-                            int power, long course, ColorTO colorTo, TypeTO typeTo) {
+    @Autowired
+    private AddressService addressService;
 
 
-        CarTO car = new CarTO.CarTOBuilder().withMark(mark)
-                .withModel(model)
-                .withCapacity(capacity)
-                .withColor(colorTo)
-                .withCourse(course)
-                .withPower(power)
-                .withProdYear(Year.of(prodYear))
-                .withType(typeTo).build();
 
-        return car;
-    }
-
-    private EmployeeTO createEmployee(String firstName, String lastName, Date date, OfficeTO officeTO) {
-        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
-
-        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
-
-        return new EmployeeTOBuilder().
-                withFirstName(firstName).
-                withLastName(lastName).
-                withBirthDay(date).withAddress(addressTO).withOffice(officeTO).withPosition(positionTO).build();
-    }
 
     @Test
     @Transactional
@@ -96,8 +44,13 @@ public class OfficeServiceTest {
         //give
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
 
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
 
         //when
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
@@ -115,7 +68,13 @@ public class OfficeServiceTest {
         //give
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
         //when
@@ -133,7 +92,13 @@ public class OfficeServiceTest {
         //give
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
         //when
@@ -153,10 +118,23 @@ public class OfficeServiceTest {
         //give
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606));
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606),
+                addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
         //when
@@ -166,7 +144,7 @@ public class OfficeServiceTest {
         //then
         assertNotNull(foundEmployee);
         assertNotNull(foundEmployee.getOffice());
-        assertEquals("Qwerty",foundEmployee.getOffice().getName());
+        assertEquals(savedOffice.getId(),foundEmployee.getOffice());
 
     }
 
@@ -176,10 +154,22 @@ public class OfficeServiceTest {
         //give
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606));
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606),addressTO.getId(), savedOffice.getId(), positionTO.getId() );
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
         officeService.addEmployeeToOffice(savedEmployee,savedOffice);
 
@@ -199,13 +189,25 @@ public class OfficeServiceTest {
         //give
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606), savedOffice);
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19200606), savedOffice);
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19200606), addressTO.getId(),savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
         officeService.addEmployeeToOffice(savedEmployee,savedOffice);
@@ -226,19 +228,35 @@ public class OfficeServiceTest {
         //give
 
         ColorTO colorBlack = createColor("black");
+        colorBlack = carService.addColor(colorBlack);
         TypeTO typeHatchback = createType("hatchback");
+        typeHatchback = carService.addType(typeHatchback);
+
         CarTO createdCar = createCar("Opel", "Corsa", 2002, 1.4d, 60,
-                234500, colorBlack, typeHatchback);
+                234500, colorBlack.getId(), typeHatchback.getId());
         CarTO savedCar = carService.addCar(createdCar);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606));
-        EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
-        carService.addKeeper(savedCar, employeeTO);
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
 
         String name = "Qwerty";
         String phone = "45623951";
-        OfficeTO createdOffice = createOffice(name, phone);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
+
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO.getId());
+        EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
+
+        carService.addKeeper(savedCar, savedEmployee);
         officeService.addEmployeeToOffice(savedEmployee,savedOffice);
 
         //when

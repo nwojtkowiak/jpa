@@ -19,12 +19,14 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(nullable = false, length = 45)
     private String firstName;
+
     @Column(nullable = false, length = 45)
     private String lastName;
+
     @Column(nullable = false)
-    //@Temporal(TemporalType.TIMESTAMP)
     private Date birthDay;
 
     @ManyToOne
@@ -40,7 +42,7 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
     private PositionEntity position;
 
 
-    @ManyToMany //co ustawić w usuwaniu?
+    @ManyToMany
     @JoinTable(name = "KEEPER", joinColumns = {@JoinColumn(name = "employee_id")},
             inverseJoinColumns = {@JoinColumn(name = "car_id")})
     private List<CarEntity> cars;
@@ -48,6 +50,14 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 
     // for hibernate
     public EmployeeEntity() {
+        this.cars = new ArrayList<>();
+    }
+
+    public EmployeeEntity(Long id, String firstName, String lastName, Date birthDay) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
         this.cars = new ArrayList<>();
     }
 

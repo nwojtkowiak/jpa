@@ -33,7 +33,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional(readOnly = false)
     public OfficeTO addOffice(OfficeTO office) {
-        AddressEntity addressEntity = AddressMapper.toEntity(office.getAddress());
+        AddressEntity addressEntity = addressDao.findOne(office.getAddress());
         addressEntity = addressDao.add(addressEntity);
 
         OfficeEntity officeEntity = OfficeMapper.toEntity(office);
@@ -53,6 +53,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional(readOnly = false)
     public OfficeTO updateOffice(OfficeTO office) {
         OfficeEntity officeEntity = OfficeMapper.toEntity(office);
+        officeEntity.setAddress(addressDao.findOne(office.getAddress()));
         return OfficeMapper.toTO(officeDao.update(officeEntity));
     }
 

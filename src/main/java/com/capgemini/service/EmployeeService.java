@@ -1,6 +1,8 @@
 package com.capgemini.service;
 
+import com.capgemini.types.AddressTO;
 import com.capgemini.types.EmployeeTO;
+import com.capgemini.types.PositionTO;
 
 import java.util.List;
 
@@ -30,5 +32,6 @@ public interface EmployeeService {
 
     EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id);
 
+    PositionTO addPosition(PositionTO position);
 
 }

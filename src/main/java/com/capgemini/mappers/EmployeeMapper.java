@@ -15,23 +15,21 @@ public class EmployeeMapper {
         if (employeeEntity == null) {
             return null;
         }
-        Collection<CarTO> cars = CarMapper.map2TOs(employeeEntity.getCars());
-        AddressTO addressTO = AddressMapper.toTO(employeeEntity.getAddress());
-        OfficeTO officeTO = OfficeMapper.toTO(employeeEntity.getOffice());
-        PositionTO positionTO = PositionMapper.toTO(employeeEntity.getPosition());
+        List<Long> cars = CarMapper.map2LongTOs(employeeEntity.getCars());
+        Long officeId = null;
+        if(employeeEntity.getOffice() != null){
+            officeId = employeeEntity.getOffice().getId();
+        }
 
         return new EmployeeTOBuilder().withFirstName(employeeEntity.getFirstName())
                 .withId(employeeEntity.getId())
                 .withLastName(employeeEntity.getLastName())
                 .withBirthDay(employeeEntity.getBirthDay())
-                .withAddress(addressTO)
-                .withOffice(officeTO)
-                .withPosition(positionTO)
+                .withAddress(employeeEntity.getAddress().getId())
+                .withOffice(officeId)
+                .withPosition(employeeEntity.getPosition().getId())
                 .withCars(cars).build();
 
-        /*EmployeeTO(employeeEntity.getFirstName(),employeeEntity.getLastName(),
-                employeeEntity.getBirthDay(),AddressMapper.toTO(employeeEntity.getAddress()),
-                OfficeMapper.toTO(employeeEntity.getOffice()),PositionMapper.toTO(employeeEntity.getPosition()));*/
 
     }
 
@@ -41,8 +39,7 @@ public class EmployeeMapper {
         }
 
         return new EmployeeEntity(employeeTO.getId(), employeeTO.getFirstName(), employeeTO.getLastName(),
-                employeeTO.getBirthDay(), AddressMapper.toEntity(employeeTO.getAddress()),
-                OfficeMapper.toEntity(employeeTO.getOffice()), PositionMapper.toEntity(employeeTO.getPosition()));
+                employeeTO.getBirthDay());
 
     }
 

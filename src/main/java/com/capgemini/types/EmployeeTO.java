@@ -1,20 +1,20 @@
 package com.capgemini.types;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class EmployeeTO {
     private Long id;
     private String firstName;
     private String lastName;
     private Date birthDay;
-    private AddressTO address;
-    private OfficeTO office;
-    private PositionTO position;
-    private Collection<CarTO> cars;
+    private Long address;
+    private Long office;
+    private Long position;
+    private List<Long> cars;
 
-    public EmployeeTO(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office,
-                      PositionTO position) {
+    public EmployeeTO(String firstName, String lastName, Date birthDay, Long address, Long office,
+                      Long position) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDay = birthDay;
@@ -24,9 +24,9 @@ public class EmployeeTO {
     }
 
     public EmployeeTO(Long id, String firstName, String lastName,
-                      Date birthDay, AddressTO address,
-                      OfficeTO office, PositionTO position,
-                      Collection<CarTO> cars) {
+                      Date birthDay, Long address,
+                      Long office, Long position,
+                      List<Long> cars) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,56 +45,24 @@ public class EmployeeTO {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Date getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public AddressTO getAddress() {
+    public Long getAddress() {
         return address;
     }
 
-    public void setAddress(AddressTO address) {
-        this.address = address;
-    }
-
-    public OfficeTO getOffice() {
+    public Long getOffice() {
         return office;
     }
 
-    public void setOffice(OfficeTO office) {
-        this.office = office;
-    }
-
-    public PositionTO getPosition() {
+    public Long getPosition() {
         return position;
-    }
-
-    public void setPosition(PositionTO position) {
-        this.position = position;
-    }
-
-    public Collection<CarTO> getCars() {
-        return cars;
-    }
-
-    public void setCars(Collection<CarTO> cars) {
-        this.cars = cars;
     }
 
     public static class EmployeeTOBuilder {
@@ -103,10 +71,10 @@ public class EmployeeTO {
         private String firstName;
         private String lastName;
         private Date birthDay;
-        private AddressTO address;
-        private OfficeTO office;
-        private PositionTO position;
-        private Collection<CarTO> cars;
+        private Long address;
+        private Long office;
+        private Long position;
+        private List<Long> cars;
 
         public EmployeeTOBuilder() {
             super();
@@ -132,44 +100,38 @@ public class EmployeeTO {
             return this;
         }
 
-        public EmployeeTOBuilder withAddress(AddressTO address) {
+        public EmployeeTOBuilder withAddress(Long address) {
             this.address = address;
             return this;
         }
 
-        public EmployeeTOBuilder withOffice(OfficeTO office) {
+        public EmployeeTOBuilder withOffice(Long office) {
             this.office = office;
             return this;
         }
 
-        public EmployeeTOBuilder withPosition(PositionTO position) {
+        public EmployeeTOBuilder withPosition(Long position) {
             this.position = position;
             return this;
         }
 
-        public EmployeeTOBuilder withCars(Collection<CarTO> cars) {
+        public EmployeeTOBuilder withCars(List<Long> cars) {
             this.cars = cars;
             return this;
         }
 
 
         public EmployeeTO build() {
-            checkBeforeBuild(firstName, lastName, birthDay, address, office, position);
+            checkBeforeBuild(firstName, lastName, birthDay, address, position);
             return new EmployeeTO(id, firstName, lastName, birthDay, address, office, position, cars);
         }
 
-        private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position) {
+        private void checkBeforeBuild(String firstName, String lastName, Date birthDay, Long address, Long position) {
             if (firstName == null || lastName == null || birthDay == null || address == null ||  position == null) {
                 throw new RuntimeException("Incorrect employee to be created");
             }
 
         }
 
-        private void checkBeforeBuild(String firstName, String lastName, Date birthDay, AddressTO address, OfficeTO office, PositionTO position, Collection<CarTO> cars) {
-            if (firstName == null || lastName == null || birthDay == null || address == null ||  position == null || cars == null) {
-                throw new RuntimeException("Incorrect employee to be created");
-            }
-
-        }
     }
 }

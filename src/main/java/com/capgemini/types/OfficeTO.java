@@ -1,22 +1,20 @@
 package com.capgemini.types;
 
+import java.util.List;
+
 public class OfficeTO {
     private Long id;
     private String name;
     private String phoneNumber;
-    private AddressTO address;
+    private long address;
+    private List<Long> loans;
 
-    public OfficeTO(String name, String phoneNumber, AddressTO address) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
-
-    public OfficeTO(Long id, String name, String phoneNumber, AddressTO address) {
+    public OfficeTO(Long id, String name, String phoneNumber, Long address, List<Long> loans) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.loans = loans;
     }
 
     public Long getId() {
@@ -35,24 +33,18 @@ public class OfficeTO {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public AddressTO getAddress() {
+    public Long getAddress() {
         return address;
     }
 
-    public void setAddress(AddressTO address) {
-        this.address = address;
-    }
 
     public static class OfficeTOBuilder {
 
         private Long id;
         private String name;
         private String phoneNumber;
-        private AddressTO address;
+        private Long address;
+        private List<Long> loans;
 
         public OfficeTOBuilder() {
             super();
@@ -73,24 +65,23 @@ public class OfficeTO {
             return this;
         }
 
-        public OfficeTOBuilder withAddress(AddressTO address) {
+        public OfficeTOBuilder withAddress(Long address) {
             this.address = address;
             return this;
         }
 
-
-
-        /*public AddressTOBuilder withId(long id) {
-            this.id = id;
+        public OfficeTOBuilder withLoans(List<Long> loans) {
+            this.loans = loans;
             return this;
-        }*/
+        }
+
 
         public OfficeTO build() {
             checkBeforeBuild(name, phoneNumber, address);
-            return new OfficeTO(id, name, phoneNumber, address);
+            return new OfficeTO(id, name, phoneNumber, address, loans);
         }
 
-        private void checkBeforeBuild(String name, String phoneNumber, AddressTO address) {
+        private void checkBeforeBuild(String name, String phoneNumber, Long address) {
             if (name == null || phoneNumber == null || address == null) {
                 throw new RuntimeException("Incorrect office to be created");
             }
