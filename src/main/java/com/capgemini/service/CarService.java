@@ -25,7 +25,7 @@ public interface CarService {
 
     CarTO findCarById(long id);
 
-    void addKeeper(CarTO carTO, EmployeeTO employeeTO);
+    void addKeeper(CarTO car, EmployeeTO employee);
 
     CarTO addCar(CarTO car);
 

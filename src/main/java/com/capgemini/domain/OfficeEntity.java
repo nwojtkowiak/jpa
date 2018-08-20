@@ -70,4 +70,12 @@ public class OfficeEntity implements Serializable {
     public List<EmployeeEntity> getEmployees() {
         return employees;
     }
+
+    public List<LoanEntity> getLoansFrom() {
+        return loansFrom;
+    }
+
+    public List<LoanEntity> getLoansTo() {
+        return loansTo;
+    }
 }

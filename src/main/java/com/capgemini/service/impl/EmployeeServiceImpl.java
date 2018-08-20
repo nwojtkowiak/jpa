@@ -65,6 +65,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeMapper.map2TOs(employeeDao.findAllByEmployeeCriteria(criteria));
     }
 
+    /**
+     * This method adds new employee to database
+     * The employee address and office and position are saved before employee
+     * @param employee - transport object without if
+     * @return transport object of employee with new id
+     */
     @Override
     @Transactional(readOnly = false)
     public EmployeeTO addEmployee(EmployeeTO employee) {
@@ -84,6 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeEntity.setOffice(officeEntity);
             employeeEntity.setPosition(positionEntity);
             employeeEntity = employeeDao.save(employeeEntity);
+
             if (officeEntity != null) {
                 officeEntity.getEmployees().add(employeeEntity);
                 officeDao.update(officeEntity);
@@ -101,6 +108,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
+    /**
+     * This method sets office for employee and adds employee to office
+     * @param employee_id - employee id
+     * @param office_id - office if
+     * @return transport object with updated employee information
+     */
     @Override
     @Transactional(readOnly = false)
     public EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id) {
@@ -116,6 +129,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeMapper.toTO(employeeEntity);
     }
 
+    /**
+     * This method deletes office from employee and office
+     * @param employee_id - employee id
+     * @param office_id - office id
+     * @return transport object with updated employee information
+     */
     @Override
     @Transactional(readOnly = false)
     public EmployeeTO deleteOfficeFromEmployee(Long employee_id, Long office_id) {

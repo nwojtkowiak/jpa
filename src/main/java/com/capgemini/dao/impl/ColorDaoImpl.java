@@ -14,7 +14,8 @@ public class ColorDaoImpl extends AbstractDao<ColorEntity, Long> implements Colo
 
     @Override
     public ColorEntity add(ColorEntity entity) {
-        TypedQuery<ColorEntity> query = entityManager.createQuery("select e from ColorEntity e where e.name = :name", ColorEntity.class);
+        TypedQuery<ColorEntity> query = entityManager.createQuery(
+                "select e from ColorEntity e where e.name = :name", ColorEntity.class);
         query.setParameter("name", entity.getName());
 
         try {

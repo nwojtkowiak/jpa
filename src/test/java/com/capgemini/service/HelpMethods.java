@@ -2,8 +2,6 @@ package com.capgemini.service;
 
 import com.capgemini.types.*;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.Year;
 
 public class HelpMethods {
@@ -17,7 +15,7 @@ public class HelpMethods {
     }
 
     public static CarTO createCar(String mark, String model, int prodYear, double capacity,
-                            int power, long course, Long color, Long type) {
+                                  int power, long course, Long color, Long type) {
 
 
         CarTO car = new CarTO.CarTOBuilder().withMark(mark)
@@ -33,9 +31,9 @@ public class HelpMethods {
     }
 
     public static CustomerTO createCustomer(String firstName, String lastName,
-                                              String date, Long address,
-                                              String phoneNumber, String email,
-                                              String creditCard) {
+                                            String date, Long address,
+                                            String phoneNumber, String email,
+                                            String creditCard) {
 
         return new CustomerTO.CustomerTOBuilder()
                 .withFirstName(firstName)
@@ -77,8 +75,6 @@ public class HelpMethods {
 
         return officeTO;
     }
-
-
 
 
 }

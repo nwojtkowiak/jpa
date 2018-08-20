@@ -91,4 +91,8 @@ public class CustomerEntity implements Serializable {
     public void setAddress(AddressEntity address) {
         this.address = address;
     }
+
+    public List<LoanEntity> getLoans() {
+        return loans;
+    }
 }

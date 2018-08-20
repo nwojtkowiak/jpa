@@ -29,17 +29,6 @@ public class CarServiceTest {
 
     @Autowired
     private OfficeService officeService;
-/*
-		private String mark;
-		private String model;
-		private Year prodYear;
-		private Double capacity;
-		private Integer power;
-		private BigInteger course;
-		private ColorTO color;
-		private TypeTO type;
- */
-
 
     @Test
     @Transactional

@@ -2,13 +2,13 @@ package com.capgemini.dao.impl;
 
 import com.capgemini.dao.CarDao;
 import com.capgemini.domain.CarEntity;
-import com.capgemini.domain.EmployeeEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -27,17 +27,21 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         return query.getResultList();
     }
 
+    /**
+     * This method finds list of car with keeper with employee_id
+     * @param employee_id - employee id whose is keeper this car
+     * @return list of CarEntity or empty list
+     */
     @Override
     public List<CarEntity> findCarsByKeeper(long employee_id) {
         Query query = entityManager.createQuery(
                 "select e.cars from EmployeeEntity e where id = :employee_id ");
         query.setParameter("employee_id", employee_id);
 
-
         try {
             return query.getResultList();
         } catch (NoResultException e) {
-            return new ArrayList<>();
+            return new LinkedList<>();
         }
     }
 
@@ -51,20 +55,4 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         delete(id);
     }
 
-    @Override
-    public void addKeeper(CarEntity carEntity, EmployeeEntity employeeEntity) {
-        TypedQuery<EmployeeEntity> query = entityManager.createQuery(
-                "select e from EmployeeEntity e where e.id = :id", EmployeeEntity.class);
-        query.setParameter("id", employeeEntity.getId());
-
-        try {
-            EmployeeEntity foundEmployee = query.getSingleResult();
-            foundEmployee.getCars().add(carEntity);
-            entityManager.merge(foundEmployee);
-
-        } catch (NoResultException e) {
-
-        }
-
-    }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -25,24 +25,36 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
         return update(employeeEntity);
     }
 
-
+    /**
+     * This method finds all emplyees who work in an office with office_id
+     *
+     * @param office_id - office id
+     * @return list of EmployeeEntity or empty list
+     */
     @Override
     public List<EmployeeEntity> findAllByOfficeId(Long office_id) {
         TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
                 "select e from EmployeeEntity e inner join e.office o where o.id = :office_id"
                 , EmployeeEntity.class);
+
         queryEmployee.setParameter("office_id", office_id);
 
         try {
 
             List<EmployeeEntity> employeeEntity = queryEmployee.getResultList();
             return employeeEntity;
-
         } catch (NoResultException e) {
-            return null;
+            return new LinkedList<>();
         }
     }
 
+    /**
+     * This method finds all employees who work in an office with office_id and are keepers of car with car_id
+     *
+     * @param office_id - office id
+     * @param car_id    - car id
+     * @return list of EmployeeEntity or empty list
+     */
     @Override
     public List<EmployeeEntity> findAllByOfficeIdAndCarId(long office_id, long car_id) {
         TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
@@ -52,6 +64,7 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
                         " where o.id = :office_id " +
                         " and c.id = :car_id"
                 , EmployeeEntity.class);
+
         queryEmployee.setParameter("office_id", office_id);
         queryEmployee.setParameter("car_id", car_id);
 
@@ -60,10 +73,17 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
             return queryEmployee.getResultList();
 
         } catch (NoResultException e) {
-            return new ArrayList<>();
+            return new LinkedList<>();
         }
     }
 
+    /**
+     * This method finds all employees who have information according with searchCriteria
+     * This method finds only for filled fields
+     *
+     * @param searchCriteria transport object with search criteria
+     * @return list of EmployeeEntity or empty list
+     */
     public List<EmployeeEntity> findAllByEmployeeCriteria(EmployeeSearchCriteriaTO searchCriteria) {
         TypedQuery<EmployeeEntity> queryEmployee;
 
@@ -117,7 +137,7 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
             return queryEmployee.getResultList();
 
         } catch (NoResultException e) {
-            return null;
+            return new LinkedList<>();
         }
 
     }

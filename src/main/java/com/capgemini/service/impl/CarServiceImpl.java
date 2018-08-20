@@ -1,13 +1,7 @@
 package com.capgemini.service.impl;
 
-import com.capgemini.dao.CarDao;
-import com.capgemini.dao.ColorDao;
-import com.capgemini.dao.LoanDao;
-import com.capgemini.dao.TypeDao;
-import com.capgemini.domain.CarEntity;
-import com.capgemini.domain.ColorEntity;
-import com.capgemini.domain.LoanEntity;
-import com.capgemini.domain.TypeEntity;
+import com.capgemini.dao.*;
+import com.capgemini.domain.*;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.mappers.ColorMapper;
 import com.capgemini.mappers.EmployeeMapper;
@@ -38,9 +32,11 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private TypeDao typeDao;
 
-    //TODO zamienić na serwis
     @Autowired
     private LoanDao loanDao;
+
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @Override
     public List<CarTO> findAllCars() {
@@ -66,13 +62,31 @@ public class CarServiceImpl implements CarService {
         return CarMapper.toTO(carDao.findOne(car_id));
     }
 
+    /**
+     * This method adds a keeper to a car
+     * If gave keeper or car doesn't exist that it doesn't add
+     * @param car - transport object of car with id
+     * @param employee - transport object of employee with id
+     */
     @Override
     @Transactional(readOnly = false)
-    public void addKeeper(CarTO carTO, EmployeeTO employeeTO) {
+    public void addKeeper(CarTO car, EmployeeTO employee) {
+        EmployeeEntity foundEmployee = employeeDao.findOne(employee.getId());
+        CarEntity foundCar = carDao.findOne(car.getId());
 
-        carDao.addKeeper(CarMapper.toEntity(carTO), EmployeeMapper.toEntity(employeeTO));
+        if (foundEmployee != null && foundCar != null) {
+            foundEmployee.getCars().add(foundCar);
+            employeeDao.update(foundEmployee);
+        }
     }
 
+    /**
+     * This method adds car to database
+     * Before this operation, car color and type are saved to database
+     *
+     * @param car - transport object withou id
+     * @return transport object of car with new id
+     */
     @Override
     @Transactional(readOnly = false)
     public CarTO addCar(CarTO car) {
@@ -102,6 +116,13 @@ public class CarServiceImpl implements CarService {
         return ColorMapper.map2TOs(colorDao.findAll());
     }
 
+    /**
+     * This method updates car information
+     * Before save to database, related entities are get from database
+     *
+     * @param car tranasport object of car with id
+     * @return the same transport object of car with id
+     */
     @Override
     @Transactional(readOnly = false)
     public CarTO updateCar(CarTO car) {
@@ -110,7 +131,7 @@ public class CarServiceImpl implements CarService {
         carEntity.setColor(colorDao.findOne(car.getColor()));
         carEntity.setType(typeDao.findOne(car.getType()));
         List<LoanEntity> loans = new LinkedList<>();
-        for(Long loanId : car.getLoans()){
+        for (Long loanId : car.getLoans()) {
             loans.add(loanDao.findOne(loanId));
         }
         carEntity.setLoans(loans);

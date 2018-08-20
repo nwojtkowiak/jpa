@@ -28,6 +28,12 @@ public class OfficeServiceImpl implements OfficeService {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * This method adds an office to database.
+     * The office address is save before office.
+     * @param office - transport object of office without id
+     * @return transport object of office with id and updated information
+     */
     @Override
     @Transactional(readOnly = false)
     public OfficeTO addOffice(OfficeTO office) {
@@ -37,7 +43,7 @@ public class OfficeServiceImpl implements OfficeService {
         OfficeEntity officeEntity = OfficeMapper.toEntity(office);
         officeEntity.setAddress(addressEntity);
 
-        return OfficeMapper.toTO(officeDao.add(officeEntity));
+        return OfficeMapper.toTO(officeDao.save(officeEntity));
     }
 
     @Override
@@ -46,6 +52,12 @@ public class OfficeServiceImpl implements OfficeService {
         officeDao.delete(id);
     }
 
+    /**
+     * This method updates information about an office.
+     * The office address is get from database by its id.
+     * @param office - transport object with id and new information
+     * @return the same transport object of office from database if this object found in database
+     */
 
     @Override
     @Transactional(readOnly = false)

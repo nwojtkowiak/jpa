@@ -22,6 +22,4 @@ public interface CarDao extends Dao<CarEntity, Long> {
     CarEntity add(CarEntity entity);
 
     void deleteCar(long id);
-
-    void addKeeper(CarEntity carEntity, EmployeeEntity employeeEntity);
 }

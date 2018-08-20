@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 @Repository
 public class OfficeDaoImpl extends AbstractDao<OfficeEntity, Long> implements OfficeDao {
 
-
+    
     @Override
     public OfficeEntity add(OfficeEntity entity) {
         TypedQuery<OfficeEntity> query = entityManager.createQuery(

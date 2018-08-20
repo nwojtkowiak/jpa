@@ -9,12 +9,17 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 @Repository
 public class LoanDaoImpl extends AbstractDao<LoanEntity, Long> implements LoanDao {
 
+    /**
+     * This methods finds cars which were loaned more than 10 times by different customers
+     * @return list of CarEntity or empty list
+     */
     @Override
     public List<CarEntity> findCarsWith10Loans() {
         Query query = entityManager.createQuery(
@@ -28,10 +33,16 @@ public class LoanDaoImpl extends AbstractDao<LoanEntity, Long> implements LoanDa
         try {
             return query.getResultList();
         } catch (NoResultException e) {
-            return new ArrayList<>();
+            return new LinkedList<>();
         }
     }
 
+    /**
+     * This method counts cars which were loaned between from and to date
+     * @param from date which is start of a period
+     * @param to date which is end of a period
+     * @return number of loans
+     */
     @Override
     public Long countCarsWithLoansBetweenDate(String from, String to) {
         Query query = entityManager.createQuery(
