@@ -52,11 +52,6 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
     }
 
     @Override
-    public CarEntity updateCarInfo(CarEntity carEntity) {
-        return update(carEntity);
-    }
-
-    @Override
     public void addKeeper(CarEntity carEntity, EmployeeEntity employeeEntity) {
         TypedQuery<EmployeeEntity> query = entityManager.createQuery(
                 "select e from EmployeeEntity e where e.id = :id", EmployeeEntity.class);

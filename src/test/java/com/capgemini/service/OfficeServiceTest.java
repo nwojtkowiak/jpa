@@ -2,7 +2,6 @@ package com.capgemini.service;
 
 
 import com.capgemini.types.*;
-import com.capgemini.types.EmployeeTO.EmployeeTOBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.time.Year;
 import java.util.List;
 
 import static com.capgemini.service.HelpMethods.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,8 +29,6 @@ public class OfficeServiceTest {
 
     @Autowired
     private AddressService addressService;
-
-
 
 
     @Test
@@ -107,8 +100,8 @@ public class OfficeServiceTest {
 
         //then
         assertNotNull(updatedOffice);
-        assertEquals("asdfgh",updatedOffice.getName());
-        assertEquals(phone,updatedOffice.getPhoneNumber());
+        assertEquals("asdfgh", updatedOffice.getName());
+        assertEquals(phone, updatedOffice.getPhoneNumber());
 
     }
 
@@ -133,18 +126,18 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06",
+        EmployeeTO employeeTO = createEmployee("Ania", "Testowa", "1920-06-06",
                 addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
         //when
-        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee.getId(), savedOffice.getId());
         EmployeeTO foundEmployee = employeeService.findEmployeeById(savedEmployee.getId());
 
         //then
         assertNotNull(foundEmployee);
         assertNotNull(foundEmployee.getOffice());
-        assertEquals(savedOffice.getId(),foundEmployee.getOffice());
+        assertEquals(savedOffice.getId(), foundEmployee.getOffice());
 
     }
 
@@ -169,9 +162,9 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06",addressTO.getId(), savedOffice.getId(), positionTO.getId() );
+        EmployeeTO employeeTO = createEmployee("Ania", "Testowa", "1920-06-06", addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
-        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee.getId(), savedOffice.getId());
 
         //when
         employeeService.deleteOfficeFromEmployee(savedEmployee.getId(), savedOffice.getId());
@@ -204,21 +197,21 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO employeeTO = createEmployee("Ania", "Testowa", "1920-06-06", addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman", "Testowy", "1920-06-06", addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
-        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee.getId(), savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(), savedOffice.getId());
 
         //when
         List<EmployeeTO> employees = officeService.findEmployeesByOffice(savedOffice.getId());
 
         //then
         assertNotNull(employees);
-        assertEquals(2,employees.size());
+        assertEquals(2, employees.size());
 
     }
 
@@ -253,18 +246,18 @@ public class OfficeServiceTest {
         OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO.getId());
+        EmployeeTO employeeTO = createEmployee("Ania", "Testowa", "1920-06-06", addressTO.getId(), null, positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
         carService.addKeeper(savedCar, savedEmployee);
-        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee.getId(), savedOffice.getId());
 
         //when
         List<EmployeeTO> employees = officeService.findEmployeeByOfficeAndCar(savedOffice.getId(), savedCar.getId());
 
         //then
         assertNotNull(employees);
-        assertEquals(1,employees.size());
+        assertEquals(1, employees.size());
 
     }
 
@@ -289,21 +282,22 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO employeeTO = createEmployee("Ania", "Testowa", "1920-06-06", addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman", "Testowy", "1920-06-06", addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
-        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee.getId(), savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(), savedOffice.getId());
 
         officeService.deleteOffice(savedOffice.getId());
+
         //when
         List<EmployeeTO> employees = employeeService.findAllEmployee();
 
         //then
-        assertEquals(0,employees.size());
+        assertEquals(0, employees.size());
 
     }
 

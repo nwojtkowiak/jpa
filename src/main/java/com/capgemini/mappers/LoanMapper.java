@@ -4,7 +4,6 @@ import com.capgemini.domain.LoanEntity;
 import com.capgemini.types.LoanTO;
 import com.capgemini.types.LoanTO.LoanToBuilder;
 
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +32,7 @@ public class LoanMapper {
         if (loanTO == null) {
             return null;
         }
-        return new LoanEntity(loanTO.getId(), loanTO.getDateFrom().toString(), loanTO.getDateTo().toString(), loanTO.getAmount());
+        return new LoanEntity(loanTO.getId(), loanTO.getDateFrom(), loanTO.getDateTo(), loanTO.getAmount());
     }
 
     public static List<Long> map2TOs(List<LoanEntity> loanEntities) {
@@ -43,10 +42,5 @@ public class LoanMapper {
         return new LinkedList<>();
     }
 
-    public static List<LoanEntity> map2Entities(List<LoanTO> loanTOs) {
-        if (loanTOs != null) {
-            return loanTOs.stream().map(LoanMapper::toEntity).collect(Collectors.toList());
-        }
-        return new LinkedList<>();
-    }
+
 }

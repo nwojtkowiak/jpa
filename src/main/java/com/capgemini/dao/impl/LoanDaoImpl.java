@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,8 +35,8 @@ public class LoanDaoImpl extends AbstractDao<LoanEntity, Long> implements LoanDa
     @Override
     public Long countCarsWithLoansBetweenDate(String from, String to) {
         Query query = entityManager.createQuery(
-             "select count(distinct l.car.id) from LoanEntity l " +
-                " where l.dateFrom >= :dateFrom  and l.dateTo <= :dateTo");
+                "select count(distinct l.car.id) from LoanEntity l " +
+                        " where l.dateFrom >= :dateFrom  and l.dateTo <= :dateTo");
 
         query.setParameter("dateFrom", Date.valueOf(from));
         query.setParameter("dateTo", Date.valueOf(to));

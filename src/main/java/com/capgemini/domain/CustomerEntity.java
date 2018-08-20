@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER")
-public class CustomerEntity  implements Serializable {
+public class CustomerEntity implements Serializable {
 
 
     @Id

@@ -26,12 +26,5 @@ public class OfficeDaoImpl extends AbstractDao<OfficeEntity, Long> implements Of
         }
     }
 
-    @Override
-    public void deleteOffice(long id) {
-        delete(id);
-    }
-
-
-
 
 }

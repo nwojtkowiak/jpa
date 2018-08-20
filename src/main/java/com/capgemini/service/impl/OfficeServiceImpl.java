@@ -3,10 +3,7 @@ package com.capgemini.service.impl;
 import com.capgemini.dao.AddressDao;
 import com.capgemini.dao.OfficeDao;
 import com.capgemini.domain.AddressEntity;
-import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.domain.OfficeEntity;
-import com.capgemini.mappers.AddressMapper;
-import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.mappers.OfficeMapper;
 import com.capgemini.service.EmployeeService;
 import com.capgemini.service.OfficeService;
@@ -60,12 +57,12 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public List<EmployeeTO> findEmployeesByOffice(long office_id) {
-      return employeeService.findEmployeeByOfficeId(office_id);
+        return employeeService.findEmployeeByOfficeId(office_id);
     }
 
     @Override
     public List<EmployeeTO> findEmployeeByOfficeAndCar(long office_id, long car_id) {
-        return employeeService.findEmployeeByOfficeIdAndCarId(office_id,car_id);
+        return employeeService.findEmployeeByOfficeIdAndCarId(office_id, car_id);
     }
 
     @Override

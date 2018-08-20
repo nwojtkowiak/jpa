@@ -4,7 +4,6 @@ import com.capgemini.domain.CustomerEntity;
 import com.capgemini.types.CustomerTO;
 import com.capgemini.types.CustomerTO.CustomerTOBuilder;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class CustomerMapper {
             return null;
         }
 
-        return new CustomerEntity(customerTO.getId(),customerTO.getFirstName(), customerTO.getLastName(), customerTO.getEmail(),
+        return new CustomerEntity(customerTO.getId(), customerTO.getFirstName(), customerTO.getLastName(), customerTO.getEmail(),
                 customerTO.getPhoneNumber(), customerTO.getBirthDay(), customerTO.getCreditCard());
 
     }

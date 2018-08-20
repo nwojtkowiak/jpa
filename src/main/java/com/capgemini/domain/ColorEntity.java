@@ -5,9 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "COLOR")
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@EntityListeners({UpdateListener.class, InsertListener.class})
-public class ColorEntity /*extends  AbstractEntity  */ implements Serializable {
+public class ColorEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

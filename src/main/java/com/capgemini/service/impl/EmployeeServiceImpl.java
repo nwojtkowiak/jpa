@@ -57,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeTO> findEmployeeByOfficeIdAndCarId(long office_id, long car_id) {
 
-        return EmployeeMapper.map2TOs(employeeDao.findAllByOfficeIdAndCarId(office_id,car_id));
+        return EmployeeMapper.map2TOs(employeeDao.findAllByOfficeIdAndCarId(office_id, car_id));
     }
 
     @Override
@@ -72,19 +72,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         OfficeEntity officeEntity = null;
 
-        if(employee.getOffice() != null) {
+        if (employee.getOffice() != null) {
             officeEntity = officeDao.findOne(employee.getOffice());
         }
 
         PositionEntity positionEntity = positionDao.findOne(employee.getPosition());
 
-        if(addressEntity != null && positionEntity != null) {
+        if (addressEntity != null && positionEntity != null) {
             EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employee);
             employeeEntity.setAddress(addressEntity);
             employeeEntity.setOffice(officeEntity);
             employeeEntity.setPosition(positionEntity);
             employeeEntity = employeeDao.save(employeeEntity);
-            if(officeEntity != null) {
+            if (officeEntity != null) {
                 officeEntity.getEmployees().add(employeeEntity);
                 officeDao.update(officeEntity);
             }
@@ -106,7 +106,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id) {
         OfficeEntity officeEntity = officeDao.findOne(office_id);
         EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
-        if(officeEntity != null && employeeEntity != null) {
+        if (officeEntity != null && employeeEntity != null) {
             employeeEntity.setOffice(officeEntity);
             employeeEntity = employeeDao.updateEmployeeInfo(employeeEntity);
             officeEntity.getEmployees().add(employeeEntity);
@@ -121,7 +121,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeTO deleteOfficeFromEmployee(Long employee_id, Long office_id) {
         OfficeEntity officeEntity = officeDao.findOne(office_id);
         EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
-        if(officeEntity != null && employeeEntity != null) {
+        if (officeEntity != null && employeeEntity != null) {
             employeeEntity.setOffice(null);
             employeeEntity = employeeDao.updateEmployeeInfo(employeeEntity);
             officeEntity.getEmployees().remove(employeeEntity);
@@ -137,8 +137,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         PositionEntity positionEntity = PositionMapper.toEntity(position);
         return PositionMapper.toTO(positionDao.add(positionEntity));
     }
-
-
 
 
 }

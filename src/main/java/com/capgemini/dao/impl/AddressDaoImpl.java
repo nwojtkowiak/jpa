@@ -33,10 +33,4 @@ public class AddressDaoImpl extends AbstractDao<AddressEntity, Long> implements 
 
     }
 
-    @Override
-    public void deleteAddress(long id) {
-        delete(id);
-    }
-
-
 }

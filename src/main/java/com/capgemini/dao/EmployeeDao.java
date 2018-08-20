@@ -26,5 +26,4 @@ public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
     List<EmployeeEntity> findAllByEmployeeCriteria(EmployeeSearchCriteriaTO searchCriteria);
 
 
-
 }

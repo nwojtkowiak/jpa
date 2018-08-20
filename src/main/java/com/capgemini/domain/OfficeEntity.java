@@ -33,7 +33,6 @@ public class OfficeEntity implements Serializable {
     private List<EmployeeEntity> employees;
 
 
-
     public OfficeEntity() {
         this.employees = new LinkedList<>();
     }

@@ -2,7 +2,6 @@ package com.capgemini.dao.impl;
 
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.domain.EmployeeEntity;
-import com.capgemini.domain.OfficeEntity;
 import com.capgemini.types.EmployeeSearchCriteriaTO;
 import org.springframework.stereotype.Repository;
 
