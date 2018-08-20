@@ -15,7 +15,7 @@ import static com.capgemini.service.HelpMethods.*;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class CarServiceTest {
 
     @Autowired
