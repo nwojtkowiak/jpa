@@ -1,6 +1,7 @@
 package com.capgemini.service;
 
 import com.capgemini.types.AddressTO;
+import com.capgemini.types.EmployeeSearchCriteriaTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
 
@@ -33,5 +34,7 @@ public interface EmployeeService {
     EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id);
 
     PositionTO addPosition(PositionTO position);
+
+    List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteriaTO criteria);
 
 }

@@ -1,6 +1,7 @@
 package com.capgemini.dao;
 
 import com.capgemini.domain.EmployeeEntity;
+import com.capgemini.types.EmployeeSearchCriteriaTO;
 
 import java.util.List;
 
@@ -22,11 +23,12 @@ public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
 
     EmployeeEntity setOffice(Long employee_id, Long office_id);
 
-    EmployeeEntity removeOffice(Long employee_id);
-
     List<EmployeeEntity> findAllByOfficeId(Long office_id);
 
     List<EmployeeEntity> findAllByOfficeIdAndCarId(long office_id, long car_id);
+
+    List<EmployeeEntity> findAllByEmployeeCriteria(EmployeeSearchCriteriaTO searchCriteria);
+
 
 
 }

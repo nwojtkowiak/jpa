@@ -3,10 +3,12 @@ package com.capgemini.dao.impl;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.domain.OfficeEntity;
+import com.capgemini.types.EmployeeSearchCriteriaTO;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,24 +52,6 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
     }
 
     @Override
-    public EmployeeEntity removeOffice(Long employee_id) {
-        TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
-                "select e from EmployeeEntity e where e.id = :employee_id"
-                , EmployeeEntity.class);
-        queryEmployee.setParameter("employee_id", employee_id);
-
-        try {
-
-            EmployeeEntity employeeEntity = queryEmployee.getSingleResult();
-            employeeEntity.setOffice(null);
-            return entityManager.merge(employeeEntity);
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-
-    @Override
     public List<EmployeeEntity> findAllByOfficeId(Long office_id) {
         TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
                 "select e from EmployeeEntity e inner join e.office o where o.id = :office_id"
@@ -96,11 +80,70 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
 
         try {
 
-            List<EmployeeEntity> employeeEntity = queryEmployee.getResultList();
-            return employeeEntity;
+            return queryEmployee.getResultList();
+
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<EmployeeEntity> findAllByEmployeeCriteria(EmployeeSearchCriteriaTO searchCriteria){
+        TypedQuery<EmployeeEntity> queryEmployee;
+
+        StringBuilder builderJoin = new StringBuilder();
+        StringBuilder builderWhere = new StringBuilder();
+        builderWhere.append(" where ");
+
+        boolean office = false;
+        boolean position = false;
+        boolean car = false;
+
+        if(searchCriteria.getCarId() != null){
+            builderJoin.append(" inner join e.cars c ");
+            builderWhere.append(" c.id = :car_id ");
+            car = true;
+        }
+
+        if(searchCriteria.getOfficeName() != null ){
+            if(car) {
+                builderWhere.append(" and e.office.name = :officeName ");
+            }else{
+                builderWhere.append(" e.office.name = :officeName ");
+            }
+            office = true;
+        }
+        if(searchCriteria.getPositionName() != null){
+            if(office) {
+                builderWhere.append(" and e.position.name = :positionName ");
+            }else{
+                builderWhere.append(" e.position.name = :positionName ");
+            }
+            position = true;
+        }
+
+
+
+        queryEmployee = entityManager. createQuery(
+                "select e from EmployeeEntity e " + builderJoin.toString() + builderWhere.toString()
+                , EmployeeEntity.class);
+
+        if(car){
+            queryEmployee.setParameter("car_id", searchCriteria.getCarId());
+        }
+        if(office) {
+            queryEmployee.setParameter("officeName", searchCriteria.getOfficeName());
+        }
+        if(position){
+            queryEmployee.setParameter("positionName", searchCriteria.getPositionName());
+        }
+
+
+        try {
+            return queryEmployee.getResultList();
 
         } catch (NoResultException e) {
             return null;
         }
+
     }
 }

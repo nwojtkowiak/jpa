@@ -3,7 +3,6 @@ package com.capgemini.dao.impl;
 import com.capgemini.dao.CarDao;
 import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.EmployeeEntity;
-import org.hibernate.exception.spi.ViolatedConstraintNameExtracter;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;

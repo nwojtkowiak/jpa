@@ -14,6 +14,7 @@ import com.capgemini.mappers.OfficeMapper;
 import com.capgemini.mappers.PositionMapper;
 import com.capgemini.service.EmployeeService;
 import com.capgemini.types.AddressTO;
+import com.capgemini.types.EmployeeSearchCriteriaTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,18 +66,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = false)
     public EmployeeTO addEmployee(EmployeeTO employee) {
         AddressEntity addressEntity = addressDao.findOne(employee.getAddress());
-        addressEntity = addressDao.add(addressEntity);
 
         OfficeEntity officeEntity = null;
 
         if(employee.getOffice() != null) {
             officeEntity = officeDao.findOne(employee.getOffice());
-            addressDao.add(officeEntity.getAddress());
-            officeEntity = officeDao.add(officeEntity);
         }
 
         PositionEntity positionEntity = positionDao.findOne(employee.getPosition());
-        positionEntity = positionDao.add(positionEntity);
 
         EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employee);
         employeeEntity.setAddress(addressEntity);
@@ -99,8 +96,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id) {
-        EmployeeEntity employeeEntity = employeeDao.removeOffice(employee_id);
-        employeeEntity.setOffice(null);
+        EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
+        if(employeeEntity.getOffice().getId() == office_id) {
+            employeeEntity.setOffice(null);
+        }
+        employeeEntity = employeeDao.update(employeeEntity);
+
         return EmployeeMapper.toTO(employeeEntity);
     }
 
@@ -108,6 +109,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public PositionTO addPosition(PositionTO position) {
         PositionEntity positionEntity = PositionMapper.toEntity(position);
         return PositionMapper.toTO(positionDao.add(positionEntity));
+    }
+
+    @Override
+    public List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteriaTO criteria) {
+        return EmployeeMapper.map2TOs(employeeDao.findAllByEmployeeCriteria(criteria));
     }
 
 

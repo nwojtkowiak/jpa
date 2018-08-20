@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = "spring.profiles.active=hqsql" )
+@SpringBootTest
 public class OfficeServiceTest {
 
     @Autowired
