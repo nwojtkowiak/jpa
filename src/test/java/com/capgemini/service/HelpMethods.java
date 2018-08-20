@@ -3,6 +3,7 @@ package com.capgemini.service;
 import com.capgemini.types.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.Year;
 
 public class HelpMethods {
@@ -31,12 +32,41 @@ public class HelpMethods {
         return car;
     }
 
+    public static CustomerTO createCustomer(String firstName, String lastName,
+                                              Date date, Long address,
+                                              String phoneNumber, String email,
+                                              String creditCard) {
+
+        return new CustomerTO.CustomerTOBuilder()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withBirthDay(date)
+                .withPhoneNumber(phoneNumber)
+                .withEmail(email)
+                .withCreditCard(creditCard)
+                .withAddress(address).build();
+    }
+
     public static EmployeeTO createEmployee(String firstName, String lastName, Date date, Long address, Long office, Long position) {
 
         return new EmployeeTO.EmployeeTOBuilder().
                 withFirstName(firstName).
                 withLastName(lastName).
                 withBirthDay(date).withAddress(address).withOffice(office).withPosition(position).build();
+    }
+
+    public static LoanTO createLoan(Long officeFrom, Long officeTo, Long car, Date dateFrom, Date dateTo, Long customer, double amount) {
+
+        return new LoanTO.LoanToBuilder()
+                .withOfficeFrom(officeFrom)
+                .withOfficeTo(officeTo)
+                .withCar(car)
+                .withDateFrom(dateFrom)
+                .withDateTo(dateTo)
+                .withCustomer(customer)
+                .withAmount(amount)
+                .build();
+
     }
 
     public static OfficeTO createOffice(String name, String phoneNumber, Long address) {

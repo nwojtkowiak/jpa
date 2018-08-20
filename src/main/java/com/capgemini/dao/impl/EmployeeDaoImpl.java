@@ -22,9 +22,6 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
     }
 
     @Override
-    public void deleteEmployee(Long id) {  delete(id); }
-
-    @Override
     public EmployeeEntity updateEmployeeInfo(EmployeeEntity employeeEntity) {
         return save(employeeEntity);
     }
@@ -87,7 +84,7 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
         }
     }
 
-    public List<EmployeeEntity> findAllByEmployeeCriteria(EmployeeSearchCriteriaTO searchCriteria){
+    public List<EmployeeEntity> findAllByEmployeeCriteria(EmployeeSearchCriteriaTO searchCriteria) {
         TypedQuery<EmployeeEntity> queryEmployee;
 
         StringBuilder builderJoin = new StringBuilder();
@@ -98,42 +95,40 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
         boolean position = false;
         boolean car = false;
 
-        if(searchCriteria.getCarId() != null){
+        if (searchCriteria.getCarId() != null) {
             builderJoin.append(" inner join e.cars c ");
             builderWhere.append(" c.id = :car_id ");
             car = true;
         }
 
-        if(searchCriteria.getOfficeName() != null ){
-            if(car) {
+        if (searchCriteria.getOfficeName() != null) {
+            if (car) {
                 builderWhere.append(" and e.office.name = :officeName ");
-            }else{
+            } else {
                 builderWhere.append(" e.office.name = :officeName ");
             }
             office = true;
         }
-        if(searchCriteria.getPositionName() != null){
-            if(office) {
+        if (searchCriteria.getPositionName() != null) {
+            if (office) {
                 builderWhere.append(" and e.position.name = :positionName ");
-            }else{
+            } else {
                 builderWhere.append(" e.position.name = :positionName ");
             }
             position = true;
         }
 
-
-
-        queryEmployee = entityManager. createQuery(
+        queryEmployee = entityManager.createQuery(
                 "select e from EmployeeEntity e " + builderJoin.toString() + builderWhere.toString()
                 , EmployeeEntity.class);
 
-        if(car){
+        if (car) {
             queryEmployee.setParameter("car_id", searchCriteria.getCarId());
         }
-        if(office) {
+        if (office) {
             queryEmployee.setParameter("officeName", searchCriteria.getOfficeName());
         }
-        if(position){
+        if (position) {
             queryEmployee.setParameter("positionName", searchCriteria.getPositionName());
         }
 

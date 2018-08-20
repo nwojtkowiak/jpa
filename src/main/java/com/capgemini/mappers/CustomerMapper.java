@@ -15,13 +15,15 @@ public class CustomerMapper {
         }
 
 
-        return new CustomerTOBuilder().withFirstName(customerEntity.getFirstName())
-                .withId(customerEntity.getId())
+        return new CustomerTOBuilder()
+                .withFirstName(customerEntity.getFirstName())
                 .withLastName(customerEntity.getLastName())
                 .withBirthDay(customerEntity.getBirthDay())
                 .withAddress(customerEntity.getAddress().getId())
                 .withCreditCard(customerEntity.getCreditCard())
+                .withEmail(customerEntity.getEmail())
                 .withPhoneNumber(customerEntity.getPhoneNumber())
+                .withId(customerEntity.getId())
                 .build();
 
 

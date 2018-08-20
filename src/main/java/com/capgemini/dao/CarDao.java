@@ -17,7 +17,7 @@ public interface CarDao extends Dao<CarEntity, Long> {
 
     List<CarEntity> findCarsByTypeAndMark(String type, String mark);
 
-    List<CarEntity> findCarsByKeeper(long employee_id);
+    List findCarsByKeeper(long employee_id);
 
     CarEntity add(CarEntity entity);
 

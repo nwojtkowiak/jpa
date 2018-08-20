@@ -37,8 +37,6 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
             return query.getResultList();
         } catch (NoResultException e) {
             return new ArrayList<>();
-        } catch (Exception e){
-            return new ArrayList<>();
         }
     }
 

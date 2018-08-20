@@ -5,6 +5,7 @@ import com.capgemini.listeners.UpdateListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -24,10 +25,10 @@ public class LoanEntity extends AbstractEntity implements Serializable {
     private OfficeEntity officeTo;
 
     @Column(nullable = false)
-    private Timestamp dateFrom;
+    private Date dateFrom;
 
     @Column(nullable = true)
-    private Timestamp dateTo;
+    private Date dateTo;
 
     @ManyToOne
     private CarEntity car;
@@ -43,7 +44,7 @@ public class LoanEntity extends AbstractEntity implements Serializable {
     public LoanEntity() {
     }
 
-    public LoanEntity(Long id, Timestamp dateFrom, Timestamp dateTo, double amount) {
+    public LoanEntity(Long id, Date dateFrom, Date dateTo, double amount) {
         this.id = id;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -62,11 +63,11 @@ public class LoanEntity extends AbstractEntity implements Serializable {
         return officeTo;
     }
 
-    public Timestamp getDateFrom() {
+    public Date getDateFrom() {
         return dateFrom;
     }
 
-    public Timestamp getDateTo() {
+    public Date getDateTo() {
         return dateTo;
     }
 
@@ -80,5 +81,21 @@ public class LoanEntity extends AbstractEntity implements Serializable {
 
     public double getAmount() {
         return amount;
+    }
+
+    public void setOfficeFrom(OfficeEntity officeFrom) {
+        this.officeFrom = officeFrom;
+    }
+
+    public void setOfficeTo(OfficeEntity officeTo) {
+        this.officeTo = officeTo;
+    }
+
+    public void setCar(CarEntity car) {
+        this.car = car;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 }

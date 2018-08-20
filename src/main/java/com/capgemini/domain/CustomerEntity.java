@@ -87,4 +87,12 @@ public class CustomerEntity extends AbstractEntity implements Serializable {
     public String getCreditCard() {
         return creditCard;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
 }

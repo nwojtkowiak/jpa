@@ -1,5 +1,6 @@
 package com.capgemini.types;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class LoanTO {
@@ -10,9 +11,9 @@ public class LoanTO {
 
     private long officeTo;
 
-    private Timestamp dateFrom;
+    private Date dateFrom;
 
-    private Timestamp dateTo;
+    private Date dateTo;
 
     private long car;
 
@@ -24,7 +25,7 @@ public class LoanTO {
 
     }
 
-    public LoanTO(Long id, long officeFrom, long officeTo, Timestamp dateFrom, Timestamp dateTo, long car, long customer, double amount) {
+    public LoanTO(Long id, long officeFrom, long officeTo, Date dateFrom, Date dateTo, long car, long customer, double amount) {
         this.id = id;
         this.officeFrom = officeFrom;
         this.officeTo = officeTo;
@@ -59,19 +60,19 @@ public class LoanTO {
         this.officeTo = officeTo;
     }
 
-    public Timestamp getDateFrom() {
+    public Date getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Timestamp dateFrom) {
+    public void setDateFrom(Date dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Timestamp getDateTo() {
+    public Date getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Timestamp dateTo) {
+    public void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
     }
 
@@ -107,9 +108,9 @@ public class LoanTO {
 
         private long officeTo;
 
-        private Timestamp dateFrom;
+        private Date dateFrom;
 
-        private Timestamp dateTo;
+        private Date dateTo;
 
         private long car;
 
@@ -152,12 +153,12 @@ public class LoanTO {
             return this;
         }
 
-        public LoanToBuilder withDateFrom(Timestamp dateFrom) {
+        public LoanToBuilder withDateFrom(Date dateFrom) {
             this.dateFrom = dateFrom;
             return this;
         }
 
-        public LoanToBuilder withDateTo(Timestamp dateTo) {
+        public LoanToBuilder withDateTo(Date dateTo) {
             this.dateTo = dateTo;
             return this;
         }
@@ -168,7 +169,7 @@ public class LoanTO {
             return new LoanTO(id, officeFrom,officeTo, dateFrom, dateTo, car, customer, amount);
         }
 
-        private void checkBeforeBuild(Long officeFrom, Timestamp dateFrom, Timestamp dateTo, Long car, Long customer, Double amount) {
+        private void checkBeforeBuild(Long officeFrom, Date dateFrom, Date dateTo, Long car, Long customer, Double amount) {
             if (officeFrom == null || dateFrom == null || dateTo == null || car == null || customer == null || amount == null) {
                 throw new RuntimeException("Incorrect loan be created");
             }

@@ -17,8 +17,6 @@ public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
 
     EmployeeEntity add(EmployeeEntity entity);
 
-    void deleteEmployee(Long id);
-
     EmployeeEntity updateEmployeeInfo(EmployeeEntity employeeEntity);
 
     EmployeeEntity setOffice(Long employee_id, Long office_id);
