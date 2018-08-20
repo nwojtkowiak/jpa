@@ -133,12 +133,12 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606),
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06",
                 addressTO.getId(), savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
         //when
-        officeService.addEmployeeToOffice(savedEmployee,savedOffice);
+        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
         EmployeeTO foundEmployee = employeeService.findEmployeeById(savedEmployee.getId());
 
         //then
@@ -169,12 +169,12 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606),addressTO.getId(), savedOffice.getId(), positionTO.getId() );
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06",addressTO.getId(), savedOffice.getId(), positionTO.getId() );
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
-        officeService.addEmployeeToOffice(savedEmployee,savedOffice);
+        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
 
         //when
-        officeService.delEmployeeFromOffice(savedEmployee.getId(), savedOffice.getId());
+        employeeService.deleteOfficeFromEmployee(savedEmployee.getId(), savedOffice.getId());
         EmployeeTO foundEmployee = employeeService.findEmployeeById(savedEmployee.getId());
 
         //then
@@ -204,14 +204,14 @@ public class OfficeServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19200606), addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        officeService.addEmployeeToOffice(savedEmployee,savedOffice);
-        officeService.addEmployeeToOffice(savedEmployee2,savedOffice);
+        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice.getId());
 
         //when
         List<EmployeeTO> employees = officeService.findEmployeesByOffice(savedOffice.getId());
@@ -253,11 +253,11 @@ public class OfficeServiceTest {
         OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
         OfficeTO savedOffice = officeService.addOffice(createdOffice);
 
-        EmployeeTO employeeTO = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO.getId());
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO.getId());
         EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
 
         carService.addKeeper(savedCar, savedEmployee);
-        officeService.addEmployeeToOffice(savedEmployee,savedOffice);
+        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
 
         //when
         List<EmployeeTO> employees = officeService.findEmployeeByOfficeAndCar(savedOffice.getId(), savedCar.getId());
@@ -265,6 +265,45 @@ public class OfficeServiceTest {
         //then
         assertNotNull(employees);
         assertEquals(1,employees.size());
+
+    }
+
+    @Test
+    @Transactional
+    public void testShouldReturnEmptyListEmployeeAfterDeleteOffice() {
+        //give
+        String name = "Qwerty";
+        String phone = "45623951";
+
+        AddressTO addressOfficeTO = new AddressTO.AddressTOBuilder().
+                withStreet("Polarowa").withBuilding(2).
+                withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOfficeTO = addressService.addAddress(addressOfficeTO);
+
+        OfficeTO createdOffice = createOffice(name, phone, addressOfficeTO.getId());
+        OfficeTO savedOffice = officeService.addOffice(createdOffice);
+
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        EmployeeTO employeeTO = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO savedEmployee = employeeService.addEmployee(employeeTO);
+
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1920-06-06", addressTO.getId(),savedOffice.getId(), positionTO.getId());
+        EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
+
+        employeeService.addOfficeToEmployee(savedEmployee.getId(),savedOffice.getId());
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice.getId());
+
+        officeService.deleteOffice(savedOffice.getId());
+        //when
+        List<EmployeeTO> employees = employeeService.findAllEmployee();
+
+        //then
+        assertEquals(0,employees.size());
 
     }
 

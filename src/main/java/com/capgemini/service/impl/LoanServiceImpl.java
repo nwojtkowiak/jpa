@@ -5,7 +5,6 @@ import com.capgemini.domain.*;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.mappers.CustomerMapper;
 import com.capgemini.mappers.LoanMapper;
-import com.capgemini.service.CarService;
 import com.capgemini.service.LoanService;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CustomerTO;
@@ -41,6 +40,16 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    public List<Long> findAllLoans() {
+       return  LoanMapper.map2TOs(loanDao.findAll());
+    }
+
+    @Override
+    public Long countCarsWithLoansBetweenDate(String from, String to) {
+        return loanDao.countCarsWithLoansBetweenDate(from,to);
+    }
+
+    @Override
     public CustomerTO addCustomer(CustomerTO customer){
         AddressEntity addressEntity = addressDao.findOne(customer.getAddress());
 
@@ -48,6 +57,11 @@ public class LoanServiceImpl implements LoanService {
         customerEntity.setAddress(addressEntity);
 
         return CustomerMapper.toTO(customerDao.save(customerEntity));
+    }
+
+    @Override
+    public List<Long> findAllCustomers() {
+        return CustomerMapper.map2TOs(customerDao.findAll());
     }
 
     @Override
@@ -63,6 +77,10 @@ public class LoanServiceImpl implements LoanService {
         loanEntity.setCar(carEntity);
         loanEntity.setOfficeFrom(officeEntityFrom);
         loanEntity.setOfficeTo(officeEntityTo);
-        return LoanMapper.toTO(loanDao.save(loanEntity));
+        loanEntity = loanDao.save(loanEntity);
+        carEntity.getLoans().add(loanEntity);
+        carDao.update(carEntity);
+
+        return LoanMapper.toTO(loanEntity);
     }
 }

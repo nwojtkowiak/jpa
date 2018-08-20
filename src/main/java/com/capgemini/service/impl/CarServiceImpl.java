@@ -113,6 +113,7 @@ public class CarServiceImpl implements CarService {
         for(Long loanId : car.getLoans()){
             loans.add(loanDao.findOne(loanId));
         }
+        carEntity.setLoans(loans);
         return CarMapper.toTO(carDao.update(carEntity));
     }
 
@@ -122,23 +123,12 @@ public class CarServiceImpl implements CarService {
         carDao.deleteCar(car_id);
     }
 
-    @Override
-    @Transactional(readOnly = false)
-    public void deleteColor(long color_id) {
-        colorDao.delete(color_id);
-    }
 
     @Override
     @Transactional(readOnly = false)
     public TypeTO addType(TypeTO type) {
         TypeEntity typeEntity = TypeMapper.toEntity(type);
         return TypeMapper.toTO(typeDao.save(typeEntity));
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public void deleteType(long type_id) {
-        typeDao.delete(type_id);
     }
 
 }

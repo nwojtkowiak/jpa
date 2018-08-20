@@ -25,12 +25,12 @@ public class LoanTO {
 
     }
 
-    public LoanTO(Long id, long officeFrom, long officeTo, Date dateFrom, Date dateTo, long car, long customer, double amount) {
+    public LoanTO(Long id, long officeFrom, long officeTo, String dateFrom, String dateTo, long car, long customer, double amount) {
         this.id = id;
         this.officeFrom = officeFrom;
         this.officeTo = officeTo;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.dateFrom = Date.valueOf(dateFrom);
+        this.dateTo = Date.valueOf(dateTo);
         this.car = car;
         this.customer = customer;
         this.amount = amount;
@@ -48,56 +48,29 @@ public class LoanTO {
         return officeFrom;
     }
 
-    public void setOfficeFrom(long officeFrom) {
-        this.officeFrom = officeFrom;
-    }
-
     public long getOfficeTo() {
         return officeTo;
     }
 
-    public void setOfficeTo(long officeTo) {
-        this.officeTo = officeTo;
+    public String getDateFrom() {
+        return dateFrom.toString();
     }
 
-    public Date getDateFrom() {
-        return dateFrom;
+    public String getDateTo() {
+        return dateTo.toString();
     }
 
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public Date getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-    }
 
     public long getCar() {
         return car;
-    }
-
-    public void setCar(long car) {
-        this.car = car;
     }
 
     public long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(long customer) {
-        this.customer = customer;
-    }
-
     public double getAmount() {
         return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public static class LoanToBuilder {
@@ -153,20 +126,20 @@ public class LoanTO {
             return this;
         }
 
-        public LoanToBuilder withDateFrom(Date dateFrom) {
-            this.dateFrom = dateFrom;
+        public LoanToBuilder withDateFrom(String dateFrom) {
+            this.dateFrom = Date.valueOf(dateFrom);
             return this;
         }
 
-        public LoanToBuilder withDateTo(Date dateTo) {
-            this.dateTo = dateTo;
+        public LoanToBuilder withDateTo(String dateTo) {
+            this.dateTo = Date.valueOf(dateTo);
             return this;
         }
 
 
         public LoanTO build() {
             checkBeforeBuild(officeFrom, dateFrom, dateTo, car, customer, amount);
-            return new LoanTO(id, officeFrom,officeTo, dateFrom, dateTo, car, customer, amount);
+            return new LoanTO(id, officeFrom,officeTo, dateFrom.toString(), dateTo.toString(), car, customer, amount);
         }
 
         private void checkBeforeBuild(Long officeFrom, Date dateFrom, Date dateTo, Long car, Long customer, Double amount) {

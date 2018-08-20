@@ -19,7 +19,8 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
     public List<CarEntity> findCarsByTypeAndMark(String type, String mark) {
 
         TypedQuery<CarEntity> query = entityManager.createQuery(
-                "select car from CarEntity car inner join car.type t " + "where t.name = :type and car.mark = :mark", CarEntity.class);
+                "select car from CarEntity car inner join car.type t "
+                        + "where t.name = :type and car.mark = :mark", CarEntity.class);
 
         query.setParameter("type", type);
         query.setParameter("mark", mark);
@@ -28,8 +29,8 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
 
     @Override
     public List<CarEntity> findCarsByKeeper(long employee_id) {
-        Query/*TypedQuery<CarEntity>*/ query = entityManager.createQuery(
-                "select e.cars from EmployeeEntity e where id = :employee_id "/*, CarEntity.class*/);
+        Query query = entityManager.createQuery(
+                "select e.cars from EmployeeEntity e where id = :employee_id ");
         query.setParameter("employee_id", employee_id);
 
 

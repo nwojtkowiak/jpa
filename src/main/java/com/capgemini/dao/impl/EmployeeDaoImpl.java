@@ -23,30 +23,9 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
 
     @Override
     public EmployeeEntity updateEmployeeInfo(EmployeeEntity employeeEntity) {
-        return save(employeeEntity);
+        return update(employeeEntity);
     }
 
-    @Override
-    public EmployeeEntity setOffice(Long employee_id, Long office_id) {
-        TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
-                "select e from EmployeeEntity e where e.id = :employee_id"
-                , EmployeeEntity.class);
-        queryEmployee.setParameter("employee_id", employee_id);
-
-        TypedQuery<OfficeEntity> queryOffice = entityManager.createQuery(
-                "select e from OfficeEntity e where e.id = :office_id"
-                , OfficeEntity.class);
-        queryOffice.setParameter("office_id", office_id);
-
-        try {
-            OfficeEntity officeEntity = queryOffice.getSingleResult();
-            EmployeeEntity employeeEntity = queryEmployee.getSingleResult();
-            employeeEntity.setOffice(officeEntity);
-            return entityManager.merge(employeeEntity);
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
 
     @Override
     public List<EmployeeEntity> findAllByOfficeId(Long office_id) {
@@ -68,8 +47,10 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
     @Override
     public List<EmployeeEntity> findAllByOfficeIdAndCarId(long office_id, long car_id) {
         TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
-                "select e from EmployeeEntity e inner join e.office o " +
-                        " inner join e.cars c where o.id = :office_id " +
+                "select e from EmployeeEntity e " +
+                        " inner join e.office o " +
+                        " inner join e.cars c " +
+                        " where o.id = :office_id " +
                         " and c.id = :car_id"
                 , EmployeeEntity.class);
         queryEmployee.setParameter("office_id", office_id);

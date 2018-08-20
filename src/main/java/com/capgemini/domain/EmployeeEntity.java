@@ -1,19 +1,14 @@
 package com.capgemini.domain;
 
-import com.capgemini.listeners.InsertListener;
-import com.capgemini.listeners.UpdateListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "EMPLOYEE")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EntityListeners({UpdateListener.class, InsertListener.class})
-public class EmployeeEntity extends AbstractEntity implements Serializable {
+public class EmployeeEntity implements Serializable {
 
 
     @Id
@@ -53,25 +48,14 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
         this.cars = new ArrayList<>();
     }
 
-    public EmployeeEntity(Long id, String firstName, String lastName, Date birthDay) {
+    public EmployeeEntity(Long id, String firstName, String lastName, String birthDay) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDay = birthDay;
+        this.birthDay = Date.valueOf(birthDay);
         this.cars = new ArrayList<>();
     }
 
-    public EmployeeEntity(Long id, String firstName, String lastName, Date birthDay, AddressEntity address, OfficeEntity office,
-                          PositionEntity position) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDay = birthDay;
-        this.address = address;
-        this.office = office;
-        this.position = position;
-        this.cars = new ArrayList<>();
-    }
 
     public Long getId() {
         return id;
@@ -85,20 +69,12 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
         return lastName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public AddressEntity getAddress() {
         return address;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
+    public String getBirthDay() {
+        return birthDay.toString();
     }
 
     public OfficeEntity getOffice() {
@@ -113,10 +89,6 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
         return cars;
     }
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-
     public void setAddress(AddressEntity address) {
         this.address = address;
     }
@@ -129,7 +101,4 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
         this.position = position;
     }
 
-    public void setCars(List<CarEntity> cars) {
-        this.cars = cars;
-    }
 }

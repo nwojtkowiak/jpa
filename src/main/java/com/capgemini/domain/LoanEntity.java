@@ -1,18 +1,13 @@
 package com.capgemini.domain;
 
-import com.capgemini.listeners.InsertListener;
-import com.capgemini.listeners.UpdateListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "LOAN")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EntityListeners({UpdateListener.class, InsertListener.class})
-public class LoanEntity extends AbstractEntity implements Serializable {
+public class LoanEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,10 +39,10 @@ public class LoanEntity extends AbstractEntity implements Serializable {
     public LoanEntity() {
     }
 
-    public LoanEntity(Long id, Date dateFrom, Date dateTo, double amount) {
+    public LoanEntity(Long id, String dateFrom, String dateTo, double amount) {
         this.id = id;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.dateFrom = Date.valueOf(dateFrom);
+        this.dateTo = Date.valueOf(dateTo);
         this.amount = amount;
     }
 
@@ -63,12 +58,12 @@ public class LoanEntity extends AbstractEntity implements Serializable {
         return officeTo;
     }
 
-    public Date getDateFrom() {
-        return dateFrom;
+    public String getDateFrom() {
+        return dateFrom.toString();
     }
 
-    public Date getDateTo() {
-        return dateTo;
+    public String getDateTo() {
+        return dateTo.toString();
     }
 
     public CarEntity getCar() {

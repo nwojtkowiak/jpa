@@ -33,7 +33,7 @@ public class HelpMethods {
     }
 
     public static CustomerTO createCustomer(String firstName, String lastName,
-                                              Date date, Long address,
+                                              String date, Long address,
                                               String phoneNumber, String email,
                                               String creditCard) {
 
@@ -47,7 +47,7 @@ public class HelpMethods {
                 .withAddress(address).build();
     }
 
-    public static EmployeeTO createEmployee(String firstName, String lastName, Date date, Long address, Long office, Long position) {
+    public static EmployeeTO createEmployee(String firstName, String lastName, String date, Long address, Long office, Long position) {
 
         return new EmployeeTO.EmployeeTOBuilder().
                 withFirstName(firstName).
@@ -55,7 +55,7 @@ public class HelpMethods {
                 withBirthDay(date).withAddress(address).withOffice(office).withPosition(position).build();
     }
 
-    public static LoanTO createLoan(Long officeFrom, Long officeTo, Long car, Date dateFrom, Date dateTo, Long customer, double amount) {
+    public static LoanTO createLoan(Long officeFrom, Long officeTo, Long car, String dateFrom, String dateTo, Long customer, double amount) {
 
         return new LoanTO.LoanToBuilder()
                 .withOfficeFrom(officeFrom)

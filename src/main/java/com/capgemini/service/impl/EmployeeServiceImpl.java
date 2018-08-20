@@ -8,12 +8,9 @@ import com.capgemini.domain.AddressEntity;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.domain.OfficeEntity;
 import com.capgemini.domain.PositionEntity;
-import com.capgemini.mappers.AddressMapper;
 import com.capgemini.mappers.EmployeeMapper;
-import com.capgemini.mappers.OfficeMapper;
 import com.capgemini.mappers.PositionMapper;
 import com.capgemini.service.EmployeeService;
-import com.capgemini.types.AddressTO;
 import com.capgemini.types.EmployeeSearchCriteriaTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
@@ -39,15 +36,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private PositionDao positionDao;
 
-    @Override
-    public List<EmployeeTO> findAllEmployees() {
-        return EmployeeMapper.map2TOs(employeeDao.findAll());
-    }
 
     @Override
     public EmployeeTO findEmployeeById(long id) {
 
         return EmployeeMapper.toTO(employeeDao.findOne(id));
+    }
+
+    @Override
+    public List<EmployeeTO> findAllEmployee() {
+        return EmployeeMapper.map2TOs(employeeDao.findAll());
     }
 
     @Override
@@ -63,6 +61,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteriaTO criteria) {
+        return EmployeeMapper.map2TOs(employeeDao.findAllByEmployeeCriteria(criteria));
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public EmployeeTO addEmployee(EmployeeTO employee) {
         AddressEntity addressEntity = addressDao.findOne(employee.getAddress());
@@ -75,46 +78,67 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         PositionEntity positionEntity = positionDao.findOne(employee.getPosition());
 
-        EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employee);
-        employeeEntity.setAddress(addressEntity);
-        employeeEntity.setOffice(officeEntity);
-        employeeEntity.setPosition(positionEntity);
+        if(addressEntity != null && positionEntity != null) {
+            EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employee);
+            employeeEntity.setAddress(addressEntity);
+            employeeEntity.setOffice(officeEntity);
+            employeeEntity.setPosition(positionEntity);
+            employeeEntity = employeeDao.save(employeeEntity);
+            if(officeEntity != null) {
+                officeEntity.getEmployees().add(employeeEntity);
+                officeDao.update(officeEntity);
+            }
+            return EmployeeMapper.toTO(employeeEntity);
+        }
+        return employee;
 
-        return EmployeeMapper.toTO(employeeDao.save(employeeEntity));
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteEmployee(long employee_id) {
         employeeDao.delete(employee_id);
     }
 
+
     @Override
+    @Transactional(readOnly = false)
     public EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id) {
-        EmployeeEntity employeeEntity = employeeDao.setOffice(employee_id, office_id);
-        return EmployeeMapper.toTO(employeeEntity);
-    }
-
-    @Override
-    public EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id) {
+        OfficeEntity officeEntity = officeDao.findOne(office_id);
         EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
-        if(employeeEntity.getOffice().getId() == office_id) {
-            employeeEntity.setOffice(null);
+        if(officeEntity != null && employeeEntity != null) {
+            employeeEntity.setOffice(officeEntity);
+            employeeEntity = employeeDao.updateEmployeeInfo(employeeEntity);
+            officeEntity.getEmployees().add(employeeEntity);
+            officeDao.update(officeEntity);
         }
-        employeeEntity = employeeDao.update(employeeEntity);
 
         return EmployeeMapper.toTO(employeeEntity);
     }
 
     @Override
+    @Transactional(readOnly = false)
+    public EmployeeTO deleteOfficeFromEmployee(Long employee_id, Long office_id) {
+        OfficeEntity officeEntity = officeDao.findOne(office_id);
+        EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
+        if(officeEntity != null && employeeEntity != null) {
+            employeeEntity.setOffice(null);
+            employeeEntity = employeeDao.updateEmployeeInfo(employeeEntity);
+            officeEntity.getEmployees().remove(employeeEntity);
+            officeDao.update(officeEntity);
+        }
+        return EmployeeMapper.toTO(employeeEntity);
+    }
+
+
+    @Override
+    @Transactional(readOnly = false)
     public PositionTO addPosition(PositionTO position) {
         PositionEntity positionEntity = PositionMapper.toEntity(position);
         return PositionMapper.toTO(positionDao.add(positionEntity));
     }
 
-    @Override
-    public List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteriaTO criteria) {
-        return EmployeeMapper.map2TOs(employeeDao.findAllByEmployeeCriteria(criteria));
-    }
+
 
 
 }

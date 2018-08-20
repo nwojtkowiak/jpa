@@ -99,7 +99,7 @@ public class CarServiceTest {
     @Transactional
     public void testShouldNotDeleteColorAfterDeleteCar() {
         ColorTO colorSilver = createColor("silver");
-        colorSilver = carService.addColor(colorSilver);
+        carService.addColor(colorSilver);
 
         ColorTO colorBlack = createColor("black");
         colorBlack = carService.addColor(colorBlack);
@@ -108,7 +108,7 @@ public class CarServiceTest {
         typeHatchback = carService.addType(typeHatchback);
 
         TypeTO typeCombi = createType("combi");
-        typeCombi = carService.addType(typeCombi);
+        carService.addType(typeCombi);
 
         CarTO createdCar = createCar("Opel", "Corsa", 2002, 1.4d, 60,
                 234500, colorBlack.getId(), typeHatchback.getId());
@@ -142,15 +142,15 @@ public class CarServiceTest {
 
         CarTO createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
                 234500, colorBlack.getId(), typeHatchback.getId());
-        CarTO savedCar = carService.addCar(createdCar);
+        carService.addCar(createdCar);
 
         createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
                 234500, colorBlack.getId(), typeHatchback.getId());
-        savedCar = carService.addCar(createdCar);
+        carService.addCar(createdCar);
 
         createdCar = createCar(mark, "Corsa", 2002, 1.4d, 60,
                 234500, colorBlack.getId(), typeCombi.getId());
-        savedCar = carService.addCar(createdCar);
+        carService.addCar(createdCar);
 
         // when
         List<CarTO> foundCars = carService.findCarsByTypeAndMark(type, mark);
@@ -195,7 +195,6 @@ public class CarServiceTest {
 
     @Test
     @Transactional
-    //TODO spr mysql
     public void testShouldReturnCarByKeeperAfterAddKeeper() {
 
         // given
@@ -221,7 +220,7 @@ public class CarServiceTest {
         PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
         positionTO = employeeService.addPosition(positionTO);
 
-        EmployeeTO employeeTO = createEmployee("F", "L", new Date(19910102), addressTO.getId(), officeTO.getId(), positionTO.getId());
+        EmployeeTO employeeTO = createEmployee("F", "L", "1991-01-02", addressTO.getId(), officeTO.getId(), positionTO.getId());
         employeeTO = employeeService.addEmployee(employeeTO);
 
         // when
@@ -236,6 +235,86 @@ public class CarServiceTest {
             assertNotNull(employeeTO);
             assertNotNull(savedCar);
         }
+    }
+
+    @Test
+    @Transactional
+    public void testShouldReturnEmployeeAfterDeleteCar() {
+
+        // given
+        ColorTO colorBlack = createColor("black");
+        colorBlack = carService.addColor(colorBlack);
+        TypeTO typeHatchback = createType("hatchback");
+        typeHatchback = carService.addType(typeHatchback);
+
+
+        CarTO createdCar = createCar("Opel", "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack.getId(), typeHatchback.getId());
+        CarTO savedCar = carService.addCar(createdCar);
+
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        AddressTO addressOffice = new AddressTO.AddressTOBuilder().withStreet("Polarowa").withBuilding(2).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOffice = addressService.addAddress(addressOffice);
+
+        OfficeTO officeTO = new OfficeTO.OfficeTOBuilder().withAddress(addressOffice.getId()).withName("Polarowa").withPhoneNumber("7894561212").build();
+        officeTO = officeService.addOffice(officeTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        EmployeeTO employeeTO = createEmployee("F", "L", "1991-01-02", addressTO.getId(), officeTO.getId(), positionTO.getId());
+        employeeTO = employeeService.addEmployee(employeeTO);
+
+        // when
+        carService.addKeeper(savedCar, employeeTO);
+        carService.deleteCar(savedCar.getId());
+
+        // then
+        EmployeeTO foundEmployee = employeeService.findEmployeeById(employeeTO.getId());
+        assertNotNull(foundEmployee);
+
+    }
+
+    @Test
+    @Transactional
+    public void testShouldReturnCarAfterDeleteEmployee() {
+
+        // given
+        ColorTO colorBlack = createColor("black");
+        colorBlack = carService.addColor(colorBlack);
+        TypeTO typeHatchback = createType("hatchback");
+        typeHatchback = carService.addType(typeHatchback);
+
+
+        CarTO createdCar = createCar("Opel", "Corsa", 2002, 1.4d, 60,
+                234500, colorBlack.getId(), typeHatchback.getId());
+        CarTO savedCar = carService.addCar(createdCar);
+
+        AddressTO addressTO = new AddressTO.AddressTOBuilder().withStreet("Kolorowa").withBuilding(6).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressTO = addressService.addAddress(addressTO);
+
+        AddressTO addressOffice = new AddressTO.AddressTOBuilder().withStreet("Polarowa").withBuilding(2).withFlat(1).withCity("Poznan").withPostCode("61-852").build();
+        addressOffice = addressService.addAddress(addressOffice);
+
+        OfficeTO officeTO = new OfficeTO.OfficeTOBuilder().withAddress(addressOffice.getId()).withName("Polarowa").withPhoneNumber("7894561212").build();
+        officeTO = officeService.addOffice(officeTO);
+
+        PositionTO positionTO = new PositionTO.PositionToBuilder().withName("dealer").build();
+        positionTO = employeeService.addPosition(positionTO);
+
+        EmployeeTO employeeTO = createEmployee("F", "L", "1991-01-02", addressTO.getId(), officeTO.getId(), positionTO.getId());
+        employeeTO = employeeService.addEmployee(employeeTO);
+
+        // when
+        carService.addKeeper(savedCar, employeeTO);
+        employeeService.deleteEmployee(employeeTO.getId());
+
+        // then
+        CarTO foundCar = carService.findCarById(savedCar.getId());
+        assertNotNull(foundCar);
+
     }
 
 

@@ -1,6 +1,6 @@
 package com.capgemini.types;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class CustomerTO {
@@ -19,14 +19,14 @@ public class CustomerTO {
     }
 
     public CustomerTO(Long id, String firstName, String lastName, String email,
-                      String phoneNumber, Date birthDay, String creditCard,
+                      String phoneNumber, String birthDay, String creditCard,
                       Long address, List<Long> loans) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthDay = birthDay;
+        this.birthDay = Date.valueOf(birthDay);
         this.creditCard = creditCard;
         this.address = address;
         this.loans = loans;
@@ -52,8 +52,8 @@ public class CustomerTO {
         return phoneNumber;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
+    public String getBirthDay() {
+        return birthDay.toString();
     }
 
     public String getCreditCard() {
@@ -99,8 +99,8 @@ public class CustomerTO {
             return this;
         }
 
-        public CustomerTOBuilder withBirthDay(Date birthDay) {
-            this.birthDay = birthDay;
+        public CustomerTOBuilder withBirthDay(String birthDay) {
+            this.birthDay = Date.valueOf(birthDay);
             return this;
         }
 
@@ -127,7 +127,7 @@ public class CustomerTO {
 
         public CustomerTO build() {
             checkBeforeBuild(firstName, lastName, birthDay, address, email, phoneNumber, creditCard);
-            return new CustomerTO(id, firstName,lastName, email, phoneNumber, birthDay, creditCard, address, loans);
+            return new CustomerTO(id, firstName,lastName, email, phoneNumber, birthDay.toString(), creditCard, address, loans);
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, Long address,

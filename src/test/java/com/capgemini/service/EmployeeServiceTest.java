@@ -76,29 +76,29 @@ public class EmployeeServiceTest {
         OfficeTO savedOffice2 = officeService.addOffice(createdOffice2);
 
         //pracownicy
-        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee1 = employeeService.addEmployee(employeeTO1);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19490609), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1949-06-09", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska",new Date(19880806), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska","1988-08-06", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee3 = employeeService.addEmployee(employeeTO3);
 
-        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak",new Date(19880806), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak","1988-08-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee4 = employeeService.addEmployee(employeeTO4);
 
         carService.addKeeper(savedCar1, savedEmployee1);
-        officeService.addEmployeeToOffice(savedEmployee1,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee1.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee2);
-        officeService.addEmployeeToOffice(savedEmployee2,savedOffice2);
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice2.getId());
 
         carService.addKeeper(savedCar2, savedEmployee3);
-        officeService.addEmployeeToOffice(savedEmployee3,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee3.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee4);
-        officeService.addEmployeeToOffice(savedEmployee4,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee4.getId(),savedOffice1.getId());
 
         EmployeeSearchCriteriaTO criteria = new EmployeeSearchCriteriaBuilder().
                 withCar(savedCar1.getId()).
@@ -158,29 +158,29 @@ public class EmployeeServiceTest {
         OfficeTO savedOffice2 = officeService.addOffice(createdOffice2);
 
         //pracownicy
-        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee1 = employeeService.addEmployee(employeeTO1);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19490609), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1949-06-09", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska",new Date(19880806), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska","1988-08-06", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee3 = employeeService.addEmployee(employeeTO3);
 
-        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak",new Date(19880806), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak","1988-08-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee4 = employeeService.addEmployee(employeeTO4);
 
         carService.addKeeper(savedCar1, savedEmployee1);
-        officeService.addEmployeeToOffice(savedEmployee1,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee1.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee2);
-        officeService.addEmployeeToOffice(savedEmployee2,savedOffice2);
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice2.getId());
 
         carService.addKeeper(savedCar2, savedEmployee3);
-        officeService.addEmployeeToOffice(savedEmployee3,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee3.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee4);
-        officeService.addEmployeeToOffice(savedEmployee4,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee4.getId(),savedOffice1.getId());
 
         EmployeeSearchCriteriaTO criteria = new EmployeeSearchCriteriaBuilder().
                withCar(savedCar1.getId()).
@@ -236,32 +236,32 @@ public class EmployeeServiceTest {
         OfficeTO savedOffice1 = officeService.addOffice(createdOffice1);
 
         OfficeTO createdOffice2 = createOffice("Asdf", "45623951", addressOfficeTO.getId());
-        OfficeTO savedOffice2 = officeService.addOffice(createdOffice2);
+        officeService.addOffice(createdOffice2);
 
         //pracownicy
-        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee1 = employeeService.addEmployee(employeeTO1);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19490609), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1949-06-09", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska",new Date(19880806), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska","1988-08-06", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee3 = employeeService.addEmployee(employeeTO3);
 
-        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak",new Date(19880806), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak","1988-08-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee4 = employeeService.addEmployee(employeeTO4);
 
         carService.addKeeper(savedCar1, savedEmployee1);
-        officeService.addEmployeeToOffice(savedEmployee1,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee1.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee2);
-        officeService.addEmployeeToOffice(savedEmployee2,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar2, savedEmployee3);
-        officeService.addEmployeeToOffice(savedEmployee3,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee3.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee4);
-        officeService.addEmployeeToOffice(savedEmployee4,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee4.getId(),savedOffice1.getId());
 
         EmployeeSearchCriteriaTO criteria = new EmployeeSearchCriteriaBuilder().
                 withOffice(savedOffice1.getName()).build();
@@ -318,32 +318,32 @@ public class EmployeeServiceTest {
         OfficeTO savedOffice1 = officeService.addOffice(createdOffice1);
 
         OfficeTO createdOffice2 = createOffice("Asdf", "45623951", addressOfficeTO.getId());
-        OfficeTO savedOffice2 = officeService.addOffice(createdOffice2);
+        officeService.addOffice(createdOffice2);
 
         //pracownicy
-        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee1 = employeeService.addEmployee(employeeTO1);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19490609), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1949-06-09", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska",new Date(19880806), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska","1988-08-06", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee3 = employeeService.addEmployee(employeeTO3);
 
-        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak",new Date(19880806), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak","1988-08-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee4 = employeeService.addEmployee(employeeTO4);
 
         carService.addKeeper(savedCar1, savedEmployee1);
-        officeService.addEmployeeToOffice(savedEmployee1,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee1.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee2);
-        officeService.addEmployeeToOffice(savedEmployee2,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar2, savedEmployee3);
-        officeService.addEmployeeToOffice(savedEmployee3,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee3.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee4);
-        officeService.addEmployeeToOffice(savedEmployee4,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee4.getId(),savedOffice1.getId());
 
         EmployeeSearchCriteriaTO criteria = new EmployeeSearchCriteriaBuilder().
                 withCar(savedCar2.getId()).build();
@@ -397,32 +397,32 @@ public class EmployeeServiceTest {
         OfficeTO savedOffice1 = officeService.addOffice(createdOffice1);
 
         OfficeTO createdOffice2 = createOffice("Asdf", "45623951", addressOfficeTO.getId());
-        OfficeTO savedOffice2 = officeService.addOffice(createdOffice2);
+        officeService.addOffice(createdOffice2);
 
         //pracownicy
-        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa",new Date(19200606), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO1 = createEmployee("Ania","Testowa","1920-06-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee1 = employeeService.addEmployee(employeeTO1);
 
-        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy",new Date(19490609), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO2 = createEmployee("Roman","Testowy","1949-06-09", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee2 = employeeService.addEmployee(employeeTO2);
 
-        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska",new Date(19880806), addressTO.getId(),null, positionTO2.getId());
+        EmployeeTO employeeTO3 = createEmployee("Ania","Kowalska","1988-08-06", addressTO.getId(),null, positionTO2.getId());
         EmployeeTO savedEmployee3 = employeeService.addEmployee(employeeTO3);
 
-        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak",new Date(19880806), addressTO.getId(),null, positionTO1.getId());
+        EmployeeTO employeeTO4 = createEmployee("Asia","Nowak","1988-08-06", addressTO.getId(),null, positionTO1.getId());
         EmployeeTO savedEmployee4 = employeeService.addEmployee(employeeTO4);
 
         carService.addKeeper(savedCar1, savedEmployee1);
-        officeService.addEmployeeToOffice(savedEmployee1,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee1.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee2);
-        officeService.addEmployeeToOffice(savedEmployee2,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee2.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar2, savedEmployee3);
-        officeService.addEmployeeToOffice(savedEmployee3,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee3.getId(),savedOffice1.getId());
 
         carService.addKeeper(savedCar1, savedEmployee4);
-        officeService.addEmployeeToOffice(savedEmployee4,savedOffice1);
+        employeeService.addOfficeToEmployee(savedEmployee4.getId(),savedOffice1.getId());
 
         EmployeeSearchCriteriaTO criteria = new EmployeeSearchCriteriaBuilder().
                 withPosition(positionTO2.getName()).build();

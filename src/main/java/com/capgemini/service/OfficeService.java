@@ -23,10 +23,6 @@ public interface OfficeService {
 
     OfficeTO updateOffice(OfficeTO office);
 
-    void addEmployeeToOffice(EmployeeTO employee, OfficeTO office);
-
-    void delEmployeeFromOffice(long employee_id, long office_id);
-
     List<EmployeeTO> findEmployeesByOffice(long office_id);
 
     List<EmployeeTO> findEmployeeByOfficeAndCar(long office_id, long car_id);

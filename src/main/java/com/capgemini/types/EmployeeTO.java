@@ -1,6 +1,6 @@
 package com.capgemini.types;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class EmployeeTO {
@@ -13,24 +13,15 @@ public class EmployeeTO {
     private Long position;
     private List<Long> cars;
 
-    public EmployeeTO(String firstName, String lastName, Date birthDay, Long address, Long office,
-                      Long position) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDay = birthDay;
-        this.address = address;
-        this.office = office;
-        this.position = position;
-    }
 
     public EmployeeTO(Long id, String firstName, String lastName,
-                      Date birthDay, Long address,
+                      String birthDay, Long address,
                       Long office, Long position,
                       List<Long> cars) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDay = birthDay;
+        this.birthDay = Date.valueOf(birthDay);
         this.address = address;
         this.office = office;
         this.position = position;
@@ -49,8 +40,8 @@ public class EmployeeTO {
         return lastName;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
+    public String getBirthDay() {
+        return birthDay.toString();
     }
 
     public Long getAddress() {
@@ -95,8 +86,8 @@ public class EmployeeTO {
             return this;
         }
 
-        public EmployeeTOBuilder withBirthDay(Date birthDay) {
-            this.birthDay = birthDay;
+        public EmployeeTOBuilder withBirthDay(String birthDay) {
+            this.birthDay = Date.valueOf(birthDay);
             return this;
         }
 
@@ -123,7 +114,7 @@ public class EmployeeTO {
 
         public EmployeeTO build() {
             checkBeforeBuild(firstName, lastName, birthDay, address, position);
-            return new EmployeeTO(id, firstName, lastName, birthDay, address, office, position, cars);
+            return new EmployeeTO(id, firstName, lastName, birthDay.toString(), address, office, position, cars);
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDay, Long address, Long position) {

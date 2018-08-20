@@ -9,8 +9,13 @@ import java.util.List;
 
 public interface LoanService {
 
-    List<CarTO> findCarsLoanedByMoreThanPeople();
-    CustomerTO addCustomer(CustomerTO customer);
     LoanTO addLoan(LoanTO loan);
+    List<CarTO> findCarsLoanedByMoreThanPeople();
+    List<Long> findAllLoans();
+    Long countCarsWithLoansBetweenDate(String from, String to);
+    CustomerTO addCustomer(CustomerTO customer);
+    List<Long> findAllCustomers();
+
+
 
 }

@@ -1,19 +1,15 @@
 package com.capgemini.domain;
 
-import com.capgemini.listeners.InsertListener;
-import com.capgemini.listeners.UpdateListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EntityListeners({UpdateListener.class, InsertListener.class})
-public class CustomerEntity extends AbstractEntity implements Serializable {
+public class CustomerEntity  implements Serializable {
 
 
     @Id
@@ -50,13 +46,13 @@ public class CustomerEntity extends AbstractEntity implements Serializable {
     }
 
     public CustomerEntity(Long id, String firstName, String lastName, String email,
-                          String phoneNumber, Date birthDay, String creditCard) {
+                          String phoneNumber, String birthDay, String creditCard) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthDay = birthDay;
+        this.birthDay = Date.valueOf(birthDay);
         this.creditCard = creditCard;
     }
 
@@ -80,8 +76,8 @@ public class CustomerEntity extends AbstractEntity implements Serializable {
         return phoneNumber;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
+    public String getBirthDay() {
+        return birthDay.toString();
     }
 
     public String getCreditCard() {

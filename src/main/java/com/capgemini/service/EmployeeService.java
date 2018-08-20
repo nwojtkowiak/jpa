@@ -17,9 +17,10 @@ vi.	wyszukaj po opiekunie
 */
 public interface EmployeeService {
 
-    List<EmployeeTO> findAllEmployees();
 
-    EmployeeTO findEmployeeById(long id);
+    EmployeeTO findEmployeeById(long employee_id);
+
+    List<EmployeeTO> findAllEmployee();
 
     EmployeeTO addEmployee(EmployeeTO employee);
 
@@ -27,11 +28,11 @@ public interface EmployeeService {
 
     EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id);
 
+    EmployeeTO deleteOfficeFromEmployee(Long employee_id, Long office_id);
+
     List<EmployeeTO> findEmployeeByOfficeId(long office_id);
 
     List<EmployeeTO> findEmployeeByOfficeIdAndCarId(long office_id, long car_id);
-
-    EmployeeTO delOfficeFromEmployee(Long employee_id, Long office_id);
 
     PositionTO addPosition(PositionTO position);
 

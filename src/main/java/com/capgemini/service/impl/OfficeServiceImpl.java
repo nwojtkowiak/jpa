@@ -3,6 +3,7 @@ package com.capgemini.service.impl;
 import com.capgemini.dao.AddressDao;
 import com.capgemini.dao.OfficeDao;
 import com.capgemini.domain.AddressEntity;
+import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.domain.OfficeEntity;
 import com.capgemini.mappers.AddressMapper;
 import com.capgemini.mappers.EmployeeMapper;
@@ -55,16 +56,6 @@ public class OfficeServiceImpl implements OfficeService {
         OfficeEntity officeEntity = OfficeMapper.toEntity(office);
         officeEntity.setAddress(addressDao.findOne(office.getAddress()));
         return OfficeMapper.toTO(officeDao.update(officeEntity));
-    }
-
-    @Override
-    public void addEmployeeToOffice(EmployeeTO employee, OfficeTO office) {
-        employeeService.addOfficeToEmployee(employee.getId(), office.getId());
-    }
-
-    @Override
-    public void delEmployeeFromOffice(long employee_id, long office_id) {
-        employeeService.delOfficeFromEmployee(employee_id,office_id);
     }
 
     @Override

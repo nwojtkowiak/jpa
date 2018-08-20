@@ -37,9 +37,6 @@ public interface CarService {
 
     List<ColorTO> findAllColors();
 
-    void deleteColor(long color_id);
-
     TypeTO addType(TypeTO type);
 
-    void deleteType(long type_id);
 }

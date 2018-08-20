@@ -14,7 +14,9 @@ public class OfficeDaoImpl extends AbstractDao<OfficeEntity, Long> implements Of
 
     @Override
     public OfficeEntity add(OfficeEntity entity) {
-        TypedQuery<OfficeEntity> query = entityManager.createQuery("select e from OfficeEntity e where e.name = :name", OfficeEntity.class);
+        TypedQuery<OfficeEntity> query = entityManager.createQuery(
+                "select e from OfficeEntity e " +
+                        "where e.name = :name", OfficeEntity.class);
         query.setParameter("name", entity.getName());
 
         try {
