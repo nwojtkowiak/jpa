@@ -25,9 +25,9 @@ public interface EmployeeService {
 
     void deleteEmployee(long employee_id);
 
-    EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id);
+    EmployeeTO addOfficeToEmployee(long employee_id, long office_id);
 
-    EmployeeTO deleteOfficeFromEmployee(Long employee_id, Long office_id);
+    EmployeeTO deleteOfficeFromEmployee(long employee_id, long office_id);
 
     List<EmployeeTO> findEmployeeByOfficeId(long office_id);
 

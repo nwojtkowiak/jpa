@@ -29,7 +29,7 @@ public interface CarService {
 
     CarTO addCar(CarTO car);
 
-    ColorTO addColor(ColorTO colorTO);
+    ColorTO addColor(ColorTO color);
 
     CarTO updateCar(CarTO car);
 

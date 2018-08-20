@@ -106,8 +106,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional(readOnly = false)
-    public ColorTO addColor(ColorTO colorTO) {
-        ColorEntity colorEntity = ColorMapper.toEntity(colorTO);
+    public ColorTO addColor(ColorTO color) {
+        ColorEntity colorEntity = ColorMapper.toEntity(color);
         return ColorMapper.toTO(colorDao.save(colorEntity));
     }
 

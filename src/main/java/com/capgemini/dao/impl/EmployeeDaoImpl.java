@@ -21,8 +21,8 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
     }
 
     @Override
-    public EmployeeEntity updateEmployeeInfo(EmployeeEntity employeeEntity) {
-        return update(employeeEntity);
+    public EmployeeEntity updateEmployeeInfo(EmployeeEntity entity) {
+        return update(entity);
     }
 
     /**
@@ -32,7 +32,7 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
      * @return list of EmployeeEntity or empty list
      */
     @Override
-    public List<EmployeeEntity> findAllByOfficeId(Long office_id) {
+    public List<EmployeeEntity> findAllByOfficeId(long office_id) {
         TypedQuery<EmployeeEntity> queryEmployee = entityManager.createQuery(
                 "select e from EmployeeEntity e inner join e.office o where o.id = :office_id"
                 , EmployeeEntity.class);

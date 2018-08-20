@@ -17,9 +17,9 @@ public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
 
     EmployeeEntity add(EmployeeEntity entity);
 
-    EmployeeEntity updateEmployeeInfo(EmployeeEntity employeeEntity);
+    EmployeeEntity updateEmployeeInfo(EmployeeEntity entity);
 
-    List<EmployeeEntity> findAllByOfficeId(Long office_id);
+    List<EmployeeEntity> findAllByOfficeId(long office_id);
 
     List<EmployeeEntity> findAllByOfficeIdAndCarId(long office_id, long car_id);
 

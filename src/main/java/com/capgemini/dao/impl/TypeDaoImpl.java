@@ -12,7 +12,8 @@ import javax.persistence.TypedQuery;
 public class TypeDaoImpl extends AbstractDao<TypeEntity, Long> implements TypeDao {
 
     public TypeEntity add(TypeEntity entity) {
-        TypedQuery<TypeEntity> query = entityManager.createQuery("select e from TypeEntity e where e.name = :name", TypeEntity.class);
+        TypedQuery<TypeEntity> query = entityManager.createQuery(
+                "select e from TypeEntity e where e.name = :name", TypeEntity.class);
         query.setParameter("name", entity.getName());
 
         try {

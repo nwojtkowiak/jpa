@@ -48,8 +48,8 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     @Transactional(readOnly = false)
-    public void deleteOffice(long id) {
-        officeDao.delete(id);
+    public void deleteOffice(long office_id) {
+        officeDao.delete(office_id);
     }
 
     /**

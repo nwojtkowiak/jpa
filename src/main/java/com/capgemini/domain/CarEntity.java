@@ -9,9 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "CAR")
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@EntityListeners({UpdateListener.class, InsertListener.class})
-public class CarEntity /*extends  AbstractEntity */ implements Serializable {
+public class CarEntity implements Serializable {
 
 
     @Id

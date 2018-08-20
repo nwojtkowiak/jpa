@@ -116,7 +116,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public EmployeeTO addOfficeToEmployee(Long employee_id, Long office_id) {
+    public EmployeeTO addOfficeToEmployee(long employee_id, long office_id) {
         OfficeEntity officeEntity = officeDao.findOne(office_id);
         EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
         if (officeEntity != null && employeeEntity != null) {
@@ -137,7 +137,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public EmployeeTO deleteOfficeFromEmployee(Long employee_id, Long office_id) {
+    public EmployeeTO deleteOfficeFromEmployee(long employee_id, long office_id) {
         OfficeEntity officeEntity = officeDao.findOne(office_id);
         EmployeeEntity employeeEntity = employeeDao.findOne(employee_id);
         if (officeEntity != null && employeeEntity != null) {

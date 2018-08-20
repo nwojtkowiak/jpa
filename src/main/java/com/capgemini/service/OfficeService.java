@@ -19,7 +19,7 @@ public interface OfficeService {
 
     OfficeTO addOffice(OfficeTO office);
 
-    void deleteOffice(long id);
+    void deleteOffice(long office_id);
 
     OfficeTO updateOffice(OfficeTO office);
 
